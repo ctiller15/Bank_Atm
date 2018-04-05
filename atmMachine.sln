@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "atmMachine", "atmMachine\atmMachine.csproj", "{27C081F3-F3A1-4196-A8E8-9EA8CF0C6BBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtmMachine", "atmMachine\AtmMachine.csproj", "{27C081F3-F3A1-4196-A8E8-9EA8CF0C6BBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
