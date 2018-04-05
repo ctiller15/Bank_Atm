@@ -30,14 +30,50 @@ namespace AtmMachine
             return(Console.ReadLine());
         }
 
-        static void DepositSavings(User user)
+        static void ModifyBankAcc(User user, string action, string accType)
         {
-            Console.WriteLine("How much would you like to deposit? ($)");
+            bool finished = false;
+            while(!finished)
+            {
+                double amount = 0;
+                Console.WriteLine($"{accType}" +
+                    $"How much would you like to {action}? ($)");
 
-            double amount = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine(amount);
-            user.AdjustSavings(amount, "deposit");
-            user.DisplaySavingsBalance();
+                try
+                {
+                    amount = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine(amount);
+
+                }
+                catch (FormatException err)
+                {
+                    Console.WriteLine($"Exception caught: {err}");
+                    Console.WriteLine("That wasn't a valid dollar amount");
+                }
+                finally
+                {
+                    if(accType == "savings")
+                    {
+                        user.AdjustSavings(amount, action);
+                    } else if(accType == "checking")
+                    {
+                        user.AdjustChecking(amount, action);
+                    }
+
+                    Console.WriteLine($"Would you like to keep {action}ing? (Y: yes) (N: no)");
+                    string answer = Console.ReadLine();
+                    if( answer.ToLower() != "y")
+                    {
+                        finished = true;
+                    }
+                }
+            }
+            Console.WriteLine($"Finished {action}ing");
+        }
+
+        static void DepositChecking(User user)
+        {
+
         }
 
         static void HandleUserOption(string option, User user)
@@ -45,11 +81,11 @@ namespace AtmMachine
             switch(option)
             {
                 case "1":
-                    Console.WriteLine("Depositing to savings...");
-                    DepositSavings(user);
+                    ModifyBankAcc(user, "deposit", "savings");
                     break;
                 case "2":
                     Console.WriteLine("Depositing to checking...");
+                    ModifyBankAcc(user, "deposit", "checking");
                     break;
                 case "3":
                     Console.WriteLine("Withdrawing from savings...");

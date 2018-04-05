@@ -14,13 +14,13 @@ namespace AtmMachine
 
         public void DisplaySavingsBalance()
         {
-            Console.WriteLine(savingsBalance);
+            Console.WriteLine($"Current savings balance: {savingsBalance}");
             Console.ReadLine();
         }
 
         public void DisplayCheckingBalance()
         {
-            Console.WriteLine(checkingBalance);
+            Console.WriteLine($"Current checking balance: {checkingBalance}");
             Console.ReadLine();
         }
 
@@ -38,11 +38,11 @@ namespace AtmMachine
             if(option == "deposit")
             {
                 savingsBalance += amount;
-                Console.WriteLine(savingsBalance);
+                DisplaySavingsBalance();
             } else if(option == "withdraw")
             {
                 savingsBalance -= amount;
-                Console.WriteLine(savingsBalance);
+                DisplaySavingsBalance();
             }
         }
 
@@ -51,11 +51,11 @@ namespace AtmMachine
             if(option == "deposit")
             {
                 checkingBalance += amount;
-                Console.WriteLine(checkingBalance);
+                DisplayCheckingBalance();
             } else if(option == "withdraw")
             {
                 savingsBalance -= amount;
-                Console.WriteLine(checkingBalance);
+                DisplayCheckingBalance();
             }
         }
         
