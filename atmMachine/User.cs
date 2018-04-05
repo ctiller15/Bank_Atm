@@ -24,6 +24,15 @@ namespace AtmMachine
             Console.ReadLine();
         }
 
+        public double GetSavingsBalance()
+        {
+            return savingsBalance;
+        }
+        public double GetCheckingBalance()
+        {
+            return checkingBalance;
+        }
+
         public void AdjustSavings(double amount, string option)
         {
             if(option == "deposit")
