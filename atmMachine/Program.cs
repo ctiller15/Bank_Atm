@@ -52,13 +52,6 @@ namespace AtmMachine
                 }
                 finally
                 {
-                    //if(accType == "savings")
-                    //{
-                    //    user.AdjustSavings(amount, action);
-                    //} else if(accType == "checking")
-                    //{
-                    //    user.AdjustChecking(amount, action);
-                    //}
                     UpdateAccType(user, amount, accType, action);
 
                     Console.WriteLine($"Would you like to keep {action}ing? (Y: yes) (N: no)");
@@ -92,11 +85,11 @@ namespace AtmMachine
                     ModifyBankAcc(user, "deposit", "savings");
                     break;
                 case "2":
-                    Console.WriteLine("Depositing to checking...");
                     ModifyBankAcc(user, "deposit", "checking");
                     break;
                 case "3":
                     Console.WriteLine("Withdrawing from savings...");
+                    ModifyBankAcc(user, "withdraw", "savings");
                     break;
                 case "4":
                     Console.WriteLine("Withdrawing from checking...");
