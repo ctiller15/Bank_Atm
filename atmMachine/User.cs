@@ -41,7 +41,18 @@ namespace AtmMachine
                 DisplaySavingsBalance();
             } else if(option == "withdraw")
             {
-                savingsBalance -= amount;
+                if(amount > savingsBalance)
+                {
+                    //We can't do it!
+                    Console.WriteLine("You don't have enough money!!!");
+                } else {
+                    savingsBalance -= amount;
+                }
+                //catch (Exception e)
+                //{
+                //    Console.WriteLine(e);
+                //}
+
                 DisplaySavingsBalance();
             }
         }
@@ -54,7 +65,15 @@ namespace AtmMachine
                 DisplayCheckingBalance();
             } else if(option == "withdraw")
             {
-                checkingBalance -= amount;
+                if(amount > checkingBalance)
+                {
+                    // We can't withdraw!!!
+                    Console.WriteLine("You don't have enough money!!!");
+                } else
+                {
+                    checkingBalance -= amount;
+                }
+
                 DisplayCheckingBalance();
             }
         }

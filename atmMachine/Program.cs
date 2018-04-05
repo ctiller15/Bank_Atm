@@ -56,7 +56,10 @@ namespace AtmMachine
 
                     Console.WriteLine($"Would you like to keep {action}ing? (Y: yes) (N: no)");
                     string answer = Console.ReadLine();
-                    if( answer.ToLower() != "y")
+                    if( answer.ToLower() == "y")
+                    {
+                        finished = false;
+                    } else if(answer.ToLower() == "n")
                     {
                         finished = true;
                     }
@@ -89,11 +92,9 @@ namespace AtmMachine
                     ModifyBankAcc(user, "deposit", "checking");
                     break;
                 case "3":
-                    Console.WriteLine("Withdrawing from savings...");
                     ModifyBankAcc(user, "withdraw", "savings");
                     break;
                 case "4":
-                    Console.WriteLine("Withdrawing from checking...");
                     ModifyBankAcc(user, "withdraw", "checking");
                     break;
                 case "5":
