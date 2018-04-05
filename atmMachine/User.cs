@@ -54,7 +54,7 @@ namespace AtmMachine
                 DisplayCheckingBalance();
             } else if(option == "withdraw")
             {
-                savingsBalance -= amount;
+                checkingBalance -= amount;
                 DisplayCheckingBalance();
             }
         }

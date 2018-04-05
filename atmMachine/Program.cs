@@ -36,7 +36,7 @@ namespace AtmMachine
             while(!finished)
             {
                 double amount = 0;
-                Console.WriteLine($"{accType}" +
+                Console.WriteLine($"{accType}\n" +
                     $"How much would you like to {action}? ($)");
 
                 try
@@ -73,6 +73,7 @@ namespace AtmMachine
             }
             else if (accType == "checking")
             {
+                Console.WriteLine("Messing with checking!");
                 user.AdjustChecking(amount, action);
             }
         }
@@ -93,6 +94,7 @@ namespace AtmMachine
                     break;
                 case "4":
                     Console.WriteLine("Withdrawing from checking...");
+                    ModifyBankAcc(user, "withdraw", "checking");
                     break;
                 case "5":
                     Console.WriteLine("Transfer from checking to savings...");
