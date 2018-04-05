@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "atmMachine", "atmMachine\atmMachine.csproj", "{27C081F3-F3A1-4196-A8E8-9EA8CF0C6BBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27C081F3-F3A1-4196-A8E8-9EA8CF0C6BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27C081F3-F3A1-4196-A8E8-9EA8CF0C6BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27C081F3-F3A1-4196-A8E8-9EA8CF0C6BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27C081F3-F3A1-4196-A8E8-9EA8CF0C6BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50EEF06C-2C2D-46B9-BB6A-1773032B4EA9}
+	EndGlobalSection
+EndGlobal
