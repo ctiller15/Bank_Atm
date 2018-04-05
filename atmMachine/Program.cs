@@ -16,16 +16,42 @@ namespace AtmMachine
             Console.ReadLine();
         }
 
+        static string MenuUserPrompt()
+        {
+            Console.WriteLine("What transaction would you like to do next?\n\n" +
+                "(1) Deposit to savings\n" +
+                "(2) Deposit to checking\n" +
+                "(3) Withdraw from savings\n" +
+                "(4) Withdraw from checking\n" +
+                "(5) Transfer from checking to savings\n" +
+                "(6) Transfer from savings to checking\n" +
+                "(q) Quit the program");
+
+            return(Console.ReadLine());
+        }
+
         static void Main(string[] args)
         {
+            string userOption;
             var chris = new User();
-            //chris.DisplaySavingsBalance();
-            //chris.DisplayCheckingBalance();
-            //Console.WriteLine($"Hello Chris! Welcome to your bank account.\n" +
-            //    $"Checking: {chris.GetCheckingBalance()}\n" +
-            //    $"Savings: {chris.GetSavingsBalance()}");
-            //Console.ReadLine();
+
+            // Greet the user...
             IntroduceUser(chris);
+
+            //Ask what they want to do next...
+            //Console.WriteLine("What transaction would you like to do next?\n\n" +
+            //    "(1) Deposit to savings\n" +
+            //    "(2) Deposit to checking\n" +
+            //    "(3) Withdraw from savings\n" +
+            //    "(4) Withdraw from checking\n" +
+            //    "(5) Transfer from checking to savings\n" +
+            //    "(6) Transfer from savings to checking\n" +
+            //    "(q) Quit the program");
+
+            //Console.ReadLine();
+            userOption = MenuUserPrompt();
+            Console.WriteLine(userOption);
+            Console.ReadLine();
 
         }
     }
