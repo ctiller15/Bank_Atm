@@ -67,13 +67,7 @@ namespace AtmMachine
                 DisplayCheckingBalance();
             } else if(option == "withdraw")
             {
-                //if(amount > checkingBalance)
-                //{
-                //    // We can't withdraw!!!
-                //    Console.WriteLine("You don't have enough money!!!");
-                //} else {
-                //    checkingBalance -= amount;
-                //}
+
                 checkingBalance = CheckValidWithdrawal(amount, checkingBalance);
 
                 DisplayCheckingBalance();

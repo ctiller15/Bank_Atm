@@ -68,6 +68,54 @@ namespace AtmMachine
             Console.WriteLine($"Finished {action}ing");
         }
 
+        // In each case, withdraw from the first account, and deposit into the other!
+        static void TransferFunds(double acc1Funds, double acc2Funds, int option, User user)
+        {
+            double amount = 0;
+            string accType1 = "";
+            string accType2 = "";
+            Console.WriteLine($"How much would you like to transfer?");
+
+            try
+            {
+                // Check if it is a valid number.
+                amount = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine(amount);
+            }
+            catch (FormatException err)
+            {
+                Console.WriteLine($"Exception caught: {err}");
+                Console.WriteLine("That wasn't a valid dollar amount!");
+            }
+            finally
+            {
+                Console.WriteLine(amount);
+                Console.WriteLine($"Withdrawing: {acc1Funds}");
+                Console.WriteLine($"Depositing: {acc2Funds}");
+                if(amount > acc1Funds)
+                {
+                    Console.WriteLine("That won't work! Aborting transfer");
+                } else
+                {
+                    // Otherwise, commit to the transfer.
+                    if(option == 1)
+                    {
+                        accType1 = "checking";
+                        accType2 = "savings";
+                    } else if(option == 2)
+                    {
+                        accType1 = "savings";
+                        accType2 = "checking";
+                    }
+                    Console.WriteLine($"{accType1} , {accType2}");
+                    // Withdraw from the first account.
+                    UpdateAccType(user, amount, accType1, "withdraw");
+                    // Deposit into the second account.
+                    UpdateAccType(user, amount, accType2, "deposit");
+                }
+            }
+        }
+
         static void UpdateAccType(User user, double amount, string accType, string action)
         {
             if (accType == "savings")
@@ -98,9 +146,11 @@ namespace AtmMachine
                     break;
                 case "5":
                     Console.WriteLine("Transfer from checking to savings...");
+                    TransferFunds(user.GetCheckingBalance(), user.GetSavingsBalance(), 1, user);
                     break;
                 case "6":
-                    Console.WriteLine("Transfer from checking to savings...");
+                    Console.WriteLine("Transfer from savings to checking...");
+                    TransferFunds(user.GetSavingsBalance(), user.GetCheckingBalance(), 2, user);
                     break;
                 case "q":
                     Console.WriteLine("Quitting program...");
