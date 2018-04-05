@@ -52,13 +52,14 @@ namespace AtmMachine
                 }
                 finally
                 {
-                    if(accType == "savings")
-                    {
-                        user.AdjustSavings(amount, action);
-                    } else if(accType == "checking")
-                    {
-                        user.AdjustChecking(amount, action);
-                    }
+                    //if(accType == "savings")
+                    //{
+                    //    user.AdjustSavings(amount, action);
+                    //} else if(accType == "checking")
+                    //{
+                    //    user.AdjustChecking(amount, action);
+                    //}
+                    UpdateAccType(user, amount, accType, action);
 
                     Console.WriteLine($"Would you like to keep {action}ing? (Y: yes) (N: no)");
                     string answer = Console.ReadLine();
@@ -71,9 +72,16 @@ namespace AtmMachine
             Console.WriteLine($"Finished {action}ing");
         }
 
-        static void DepositChecking(User user)
+        static void UpdateAccType(User user, double amount, string accType, string action)
         {
-
+            if (accType == "savings")
+            {
+                user.AdjustSavings(amount, action);
+            }
+            else if (accType == "checking")
+            {
+                user.AdjustChecking(amount, action);
+            }
         }
 
         static void HandleUserOption(string option, User user)
