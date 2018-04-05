@@ -12,6 +12,18 @@ namespace AtmMachine
 
         private double checkingBalance = 0;
 
+        private double CheckValidWithdrawal(double withdrawn, double balance)
+        {
+            if(withdrawn > balance)
+            {
+                Console.WriteLine("You don't have enough money!!!");
+                return balance;
+            } else
+            {
+                return(balance - withdrawn);
+            }
+        }
+
         public void DisplaySavingsBalance()
         {
             Console.WriteLine($"Current savings balance: {savingsBalance}");
@@ -41,17 +53,7 @@ namespace AtmMachine
                 DisplaySavingsBalance();
             } else if(option == "withdraw")
             {
-                if(amount > savingsBalance)
-                {
-                    //We can't do it!
-                    Console.WriteLine("You don't have enough money!!!");
-                } else {
-                    savingsBalance -= amount;
-                }
-                //catch (Exception e)
-                //{
-                //    Console.WriteLine(e);
-                //}
+                savingsBalance = CheckValidWithdrawal(amount, savingsBalance);
 
                 DisplaySavingsBalance();
             }
@@ -65,14 +67,14 @@ namespace AtmMachine
                 DisplayCheckingBalance();
             } else if(option == "withdraw")
             {
-                if(amount > checkingBalance)
-                {
-                    // We can't withdraw!!!
-                    Console.WriteLine("You don't have enough money!!!");
-                } else
-                {
-                    checkingBalance -= amount;
-                }
+                //if(amount > checkingBalance)
+                //{
+                //    // We can't withdraw!!!
+                //    Console.WriteLine("You don't have enough money!!!");
+                //} else {
+                //    checkingBalance -= amount;
+                //}
+                checkingBalance = CheckValidWithdrawal(amount, checkingBalance);
 
                 DisplayCheckingBalance();
             }

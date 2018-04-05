@@ -76,7 +76,6 @@ namespace AtmMachine
             }
             else if (accType == "checking")
             {
-                Console.WriteLine("Messing with checking!");
                 user.AdjustChecking(amount, action);
             }
         }
