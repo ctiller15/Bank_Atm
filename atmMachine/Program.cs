@@ -30,12 +30,23 @@ namespace AtmMachine
             return(Console.ReadLine());
         }
 
-        static void HandleUserOption(string option)
+        static void DepositSavings(User user)
+        {
+            Console.WriteLine("How much would you like to deposit? ($)");
+
+            double amount = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine(amount);
+            user.AdjustSavings(amount, "deposit");
+            user.DisplaySavingsBalance();
+        }
+
+        static void HandleUserOption(string option, User user)
         {
             switch(option)
             {
                 case "1":
                     Console.WriteLine("Depositing to savings...");
+                    DepositSavings(user);
                     break;
                 case "2":
                     Console.WriteLine("Depositing to checking...");
@@ -74,7 +85,7 @@ namespace AtmMachine
             {
                 //Ask what they want to do next...
                 userOption = MenuUserPrompt();
-                HandleUserOption(userOption);
+                HandleUserOption(userOption, chris);
 
             }
 
