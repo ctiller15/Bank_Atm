@@ -24,7 +24,7 @@ namespace AtmMachine
                 "(4) Withdraw from checking\n" +
                 "(5) Transfer from checking to savings\n" +
                 "(6) Transfer from savings to checking\n" +
-                "(q) Quit the program");
+                "(q) Log out");
 
             return(Console.ReadLine());
         }
@@ -129,37 +129,70 @@ namespace AtmMachine
             }
         }
 
-        static void HandleUserOption(string option, User user)
+        static bool HandleUserOption(string option, User user)
         {
-            switch(option)
+            //switch(option)
+            //{
+            //    case "1":
+            //        ModifyBankAcc(user, "deposit", "savings");
+            //        //break;
+            //    case "2":
+            //        ModifyBankAcc(user, "deposit", "checking");
+            //        //break;
+            //    case "3":
+            //        ModifyBankAcc(user, "withdraw", "savings");
+            //        //break;
+            //    case "4":
+            //        ModifyBankAcc(user, "withdraw", "checking");
+            //        //break;
+            //    case "5":
+            //        Console.WriteLine("Transfer from checking to savings...");
+            //        TransferFunds(user.GetCheckingBalance(), user.GetSavingsBalance(), 1, user);
+            //        //break;
+            //    case "6":
+            //        Console.WriteLine("Transfer from savings to checking...");
+            //        TransferFunds(user.GetSavingsBalance(), user.GetCheckingBalance(), 2, user);
+            //        //break;
+            //    case "q":
+            //        Console.WriteLine("Quitting program...");
+            //        return false;
+            //        //break;
+            //    default:
+            //        //This will always run unless returned.
+            //        Console.WriteLine("That wasn't an option! Try again!");
+            //        return true;
+            //        //break;
+            //}
+            if (option == "1")
             {
-                case "1":
-                    ModifyBankAcc(user, "deposit", "savings");
-                    break;
-                case "2":
-                    ModifyBankAcc(user, "deposit", "checking");
-                    break;
-                case "3":
-                    ModifyBankAcc(user, "withdraw", "savings");
-                    break;
-                case "4":
-                    ModifyBankAcc(user, "withdraw", "checking");
-                    break;
-                case "5":
-                    Console.WriteLine("Transfer from checking to savings...");
-                    TransferFunds(user.GetCheckingBalance(), user.GetSavingsBalance(), 1, user);
-                    break;
-                case "6":
-                    Console.WriteLine("Transfer from savings to checking...");
-                    TransferFunds(user.GetSavingsBalance(), user.GetCheckingBalance(), 2, user);
-                    break;
-                case "q":
-                    Console.WriteLine("Quitting program...");
-                    break;
-                default:
-                    Console.WriteLine("That wasn't an option! Try again!");
-                    break;
+                ModifyBankAcc(user, "deposit", "savings");
             }
+            else if (option == "2")
+            {
+                ModifyBankAcc(user, "deposit", "checking");
+            }
+            else if (option == "3")
+            {
+                ModifyBankAcc(user, "withdraw", "savings");
+            }
+            else if (option == "4")
+            {
+                ModifyBankAcc(user, "withdraw", "checking");
+            } else if(option == "5")
+            {
+                TransferFunds(user.GetCheckingBalance(), user.GetSavingsBalance(), 1, user);
+            } else if(option == "6")
+            {
+                TransferFunds(user.GetSavingsBalance(), user.GetCheckingBalance(), 2, user);
+            } else if(option == "q")
+            {
+                Console.WriteLine("Quitting program...");
+                return false;
+            } else
+            {
+                Console.WriteLine("Invalid option");
+            }
+            return true;
         }
 
         static void Main(string[] args)
@@ -175,7 +208,7 @@ namespace AtmMachine
             {
                 //Ask what they want to do next...
                 userOption = MenuUserPrompt();
-                HandleUserOption(userOption, chris);
+                isUserLoggedIn = HandleUserOption(userOption, chris);
 
             }
 
