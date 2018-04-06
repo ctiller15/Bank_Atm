@@ -1,0 +1,8 @@
+deposit 100 4/6/2018 5:15:39 PM checking
+
+deposit 0 4/6/2018 5:15:47 PM savings
+
+deposit 200 4/6/2018 5:15:56 PM savings
+
+deposit $5,000.00 4/6/2018 5:16:46 PM checking
+

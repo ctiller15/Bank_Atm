@@ -100,8 +100,12 @@ namespace AtmMachine
 
         public void LogTransactions(string action, double amount, string accName)
         {
-            string Transaction = $"{action} {amount} {DateTime.Now} {accName}";
+            string Transaction = $"{action} {amount:C2} {DateTime.Now} {accName}\n";
             Console.WriteLine(Transaction);
+            using (StreamWriter writer = File.AppendText(FilePath + "transaction_log.txt"))
+            {
+                writer.WriteLine(Transaction);
+            }
         }
 
         //public WriteBankAcc{
