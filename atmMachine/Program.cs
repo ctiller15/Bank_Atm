@@ -15,8 +15,10 @@ namespace AtmMachine
             Console.ReadLine();
         }
 
-        static string MenuUserPrompt()
+        static string MenuUserPrompt(User user)
         {
+            Console.Clear();
+            user.ShowUserAcc();
             Console.WriteLine("What transaction would you like to do next?\n\n" +
                 "(1) Deposit to savings\n" +
                 "(2) Deposit to checking\n" +
@@ -41,7 +43,7 @@ namespace AtmMachine
                 try
                 {
                     amount = Convert.ToDouble(Console.ReadLine());
-                    Console.WriteLine(amount);
+                    //Console.WriteLine(amount);
 
                 }
                 catch (FormatException err)
@@ -52,6 +54,7 @@ namespace AtmMachine
                 finally
                 {
                     UpdateAccType(user, amount, accType, action);
+                    user.ShowUserAcc();
 
                     Console.WriteLine($"Would you like to keep {action}ing? (Y: yes) (N: no)");
                     string answer = Console.ReadLine();
@@ -90,8 +93,6 @@ namespace AtmMachine
             finally
             {
                 Console.WriteLine(amount);
-                //Console.WriteLine($"Withdrawing: {acc1Funds}");
-                //Console.WriteLine($"Depositing: {acc2Funds}");
                 if(amount > acc1Funds)
                 {
                     Console.WriteLine("That won't work! Aborting transfer");
@@ -107,7 +108,6 @@ namespace AtmMachine
                         accType1 = "savings";
                         accType2 = "checking";
                     }
-                    //Console.WriteLine($"{accType1} , {accType2}");
                     // Withdraw from the first account.
                     UpdateAccType(user, amount, accType1, "withdraw");
                     // Deposit into the second account.
@@ -131,38 +131,6 @@ namespace AtmMachine
 
         static bool HandleUserOption(string option, User user)
         {
-            //switch(option)
-            //{
-            //    case "1":
-            //        ModifyBankAcc(user, "deposit", "savings");
-            //        //break;
-            //    case "2":
-            //        ModifyBankAcc(user, "deposit", "checking");
-            //        //break;
-            //    case "3":
-            //        ModifyBankAcc(user, "withdraw", "savings");
-            //        //break;
-            //    case "4":
-            //        ModifyBankAcc(user, "withdraw", "checking");
-            //        //break;
-            //    case "5":
-            //        Console.WriteLine("Transfer from checking to savings...");
-            //        TransferFunds(user.GetCheckingBalance(), user.GetSavingsBalance(), 1, user);
-            //        //break;
-            //    case "6":
-            //        Console.WriteLine("Transfer from savings to checking...");
-            //        TransferFunds(user.GetSavingsBalance(), user.GetCheckingBalance(), 2, user);
-            //        //break;
-            //    case "q":
-            //        Console.WriteLine("Quitting program...");
-            //        return false;
-            //        //break;
-            //    default:
-            //        //This will always run unless returned.
-            //        Console.WriteLine("That wasn't an option! Try again!");
-            //        return true;
-            //        //break;
-            //}
             if (option == "1")
             {
                 ModifyBankAcc(user, "deposit", "savings");
@@ -207,7 +175,7 @@ namespace AtmMachine
             while (isUserLoggedIn)
             {
                 //Ask what they want to do next...
-                userOption = MenuUserPrompt();
+                userOption = MenuUserPrompt(chris);
                 isUserLoggedIn = HandleUserOption(userOption, chris);
 
             }

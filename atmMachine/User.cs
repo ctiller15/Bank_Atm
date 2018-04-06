@@ -39,7 +39,7 @@ namespace AtmMachine
         public void ShowUserAcc()
         {
             Console.WriteLine($"Checking: {GetCheckingBalance()}\n" +
-                $"Savings: {GetSavingsBalance()}");
+                $"Savings: {GetSavingsBalance()}\n");
         }
 
         public double GetSavingsBalance()
@@ -56,13 +56,14 @@ namespace AtmMachine
             if(option == "deposit")
             {
                 savingsBalance += amount;
-                DisplaySavingsBalance();
+                //DisplaySavingsBalance();
             } else if(option == "withdraw")
             {
                 savingsBalance = CheckValidWithdrawal(amount, savingsBalance);
 
                 //DisplaySavingsBalance();
             }
+            //ShowUserAcc();
         }
 
         public void AdjustChecking(double amount, string option)
@@ -70,7 +71,7 @@ namespace AtmMachine
             if(option == "deposit")
             {
                 checkingBalance += amount;
-                DisplayCheckingBalance();
+                //DisplayCheckingBalance();
             } else if(option == "withdraw")
             {
 
@@ -78,6 +79,7 @@ namespace AtmMachine
 
                 //DisplayCheckingBalance();
             }
+            //ShowUserAcc();
         }
         
     }
