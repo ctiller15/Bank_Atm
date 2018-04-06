@@ -24,17 +24,17 @@ namespace AtmMachine
             }
         }
 
-        public void DisplaySavingsBalance()
-        {
-            Console.WriteLine($"Current savings balance: {savingsBalance}");
-            Console.ReadLine();
-        }
+        //public void DisplaySavingsBalance()
+        //{
+        //    Console.WriteLine($"Current savings balance: {savingsBalance}");
+        //    Console.ReadLine();
+        //}
 
-        public void DisplayCheckingBalance()
-        {
-            Console.WriteLine($"Current checking balance: {checkingBalance}");
-            Console.ReadLine();
-        }
+        //public void DisplayCheckingBalance()
+        //{
+        //    Console.WriteLine($"Current checking balance: {checkingBalance}");
+        //    Console.ReadLine();
+        //}
 
         public void ShowUserAcc()
         {
@@ -56,14 +56,11 @@ namespace AtmMachine
             if(option == "deposit")
             {
                 savingsBalance += amount;
-                //DisplaySavingsBalance();
             } else if(option == "withdraw")
             {
                 savingsBalance = CheckValidWithdrawal(amount, savingsBalance);
 
-                //DisplaySavingsBalance();
             }
-            //ShowUserAcc();
         }
 
         public void AdjustChecking(double amount, string option)
@@ -71,15 +68,12 @@ namespace AtmMachine
             if(option == "deposit")
             {
                 checkingBalance += amount;
-                //DisplayCheckingBalance();
             } else if(option == "withdraw")
             {
 
                 checkingBalance = CheckValidWithdrawal(amount, checkingBalance);
 
-                //DisplayCheckingBalance();
             }
-            //ShowUserAcc();
         }
         
     }

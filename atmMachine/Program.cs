@@ -33,42 +33,31 @@ namespace AtmMachine
 
         static void ModifyBankAcc(User user, string action, string accType)
         {
-            bool finished = false;
-            while(!finished)
+            double amount = 0;
+            Console.WriteLine($"{accType}\n" +
+                $"How much would you like to {action}? ($)");
+
+            TrySubmittedVal(user, amount, accType, action, UpdateAccType);
+
+        }
+
+        static void TrySubmittedVal(User user, double amt, string type, string action, Action<User, double, string, string> Run)
+        {
+            try
             {
-                double amount = 0;
-                Console.WriteLine($"{accType}\n" +
-                    $"How much would you like to {action}? ($)");
+                amt = Convert.ToDouble(Console.ReadLine());
+                //Console.WriteLine(amount);
 
-                try
-                {
-                    amount = Convert.ToDouble(Console.ReadLine());
-                    //Console.WriteLine(amount);
-
-                }
-                catch (FormatException err)
-                {
-                    Console.WriteLine($"Exception caught: {err}");
-                    Console.WriteLine("That wasn't a valid dollar amount");
-                }
-                finally
-                {
-                    UpdateAccType(user, amount, accType, action);
-                    user.ShowUserAcc();
-
-                    Console.WriteLine($"Would you like to keep {action}ing? (Y: yes) (N: no)");
-                    string answer = Console.ReadLine();
-                    if( answer.ToLower() == "y")
-                    {
-                        finished = false;
-                    } else if(answer.ToLower() == "n")
-                    {
-                        finished = true;
-                    }
-                }
             }
-            Console.WriteLine($"Finished {action}ing");
-            user.ShowUserAcc();
+            catch (FormatException err)
+            {
+                Console.WriteLine($"Exception caught: {err}");
+                Console.WriteLine("That wasn't a valid dollar amount");
+            }
+            finally
+            {
+                Run(user, amt, type, action);
+            }
         }
 
         // In each case, withdraw from the first account, and deposit into the other!
@@ -77,13 +66,23 @@ namespace AtmMachine
             double amount = 0;
             string accType1 = "";
             string accType2 = "";
+
+            if (option == 1)
+            {
+                accType1 = "checking";
+                accType2 = "savings";
+            }
+            else if (option == 2)
+            {
+                accType1 = "savings";
+                accType2 = "checking";
+            }
             Console.WriteLine($"How much would you like to transfer?");
 
             try
             {
                 // Check if it is a valid number.
                 amount = Convert.ToDouble(Console.ReadLine());
-                Console.WriteLine(amount);
             }
             catch (FormatException err)
             {
@@ -98,23 +97,18 @@ namespace AtmMachine
                     Console.WriteLine("That won't work! Aborting transfer");
                 } else
                 {
-                    // Otherwise, commit to the transfer.
-                    if(option == 1)
-                    {
-                        accType1 = "checking";
-                        accType2 = "savings";
-                    } else if(option == 2)
-                    {
-                        accType1 = "savings";
-                        accType2 = "checking";
-                    }
-                    // Withdraw from the first account.
-                    UpdateAccType(user, amount, accType1, "withdraw");
-                    // Deposit into the second account.
-                    UpdateAccType(user, amount, accType2, "deposit");
-                    user.ShowUserAcc();
+                    RunTransfer(user, amount, accType1, accType2);
                 }
             }
+        }
+
+        static void RunTransfer(User user, double amt, string accType1, string accType2)
+        {
+
+            // Withdraw from the first account.
+            UpdateAccType(user, amt, accType1, "withdraw");
+            // Deposit into the second account.
+            UpdateAccType(user, amt, accType2, "deposit");
         }
 
         static void UpdateAccType(User user, double amount, string accType, string action)
@@ -177,9 +171,7 @@ namespace AtmMachine
                 //Ask what they want to do next...
                 userOption = MenuUserPrompt(chris);
                 isUserLoggedIn = HandleUserOption(userOption, chris);
-
             }
-
         }
     }
 }
