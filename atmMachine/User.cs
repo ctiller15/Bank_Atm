@@ -8,6 +8,8 @@ namespace AtmMachine
 {
     class User
     {
+        public string Name { get; set; }
+
         private double savingsBalance = 0;
 
         private double checkingBalance = 0;
@@ -23,18 +25,6 @@ namespace AtmMachine
                 return(balance - withdrawn);
             }
         }
-
-        //public void DisplaySavingsBalance()
-        //{
-        //    Console.WriteLine($"Current savings balance: {savingsBalance}");
-        //    Console.ReadLine();
-        //}
-
-        //public void DisplayCheckingBalance()
-        //{
-        //    Console.WriteLine($"Current checking balance: {checkingBalance}");
-        //    Console.ReadLine();
-        //}
 
         public void ShowUserAcc()
         {
@@ -76,5 +66,9 @@ namespace AtmMachine
             }
         }
         
+        public User(string name)
+        {
+            Name = name;
+        }
     }
 }

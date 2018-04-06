@@ -159,9 +159,12 @@ namespace AtmMachine
 
         static void Main(string[] args)
         {
+            //const string FILE_PATH = "../../../files/bank_info.csv";
             string userOption;
             bool isUserLoggedIn = true;
-            var chris = new User();
+            var chris = new User("chris");
+            var chrisdata = new UserData(chris.Name);
+
 
             // Greet the user...
             IntroduceUser(chris);
