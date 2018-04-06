@@ -15,23 +15,33 @@ namespace AtmMachine
 
         public void PullBankAccountData(User user)
         {
-            using (var reader = new StreamReader(FilePath + "bank_money.csv"))
+            if(File.Exists(FilePath + "bank_money.csv"))
             {
-                while(reader.Peek() > -1)
+                using (var reader = new StreamReader(FilePath + "bank_money.csv"))
                 {
-                    var line = reader.ReadLine().Split(',');
-                    string name = line[0];
-                    double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
-                    BankData[name] = bankArr;
-                    user.SetAccounts(bankArr[0], bankArr[1]);
-
-                    foreach(var data in BankData)
+                    while (reader.Peek() > -1)
                     {
-                        Console.WriteLine($"{data.Key} , {data.Value[0]} , {data.Value[1]}");
-                    }
+                        var line = reader.ReadLine().Split(',');
+                        string name = line[0];
+                        Console.WriteLine(name);
+                        //Console.WriteLine(Type(name));
+                        double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
+                        //Console.WriteLine($"{BankData[name]}");
+                        BankData[name.Trim()] = bankArr;
+                        Console.WriteLine(BankData.ContainsKey(name.Trim()));
+                        Console.WriteLine($"{name.GetType()}, {name}");
+                        user.SetAccounts(bankArr[0], bankArr[1]);
 
+                        foreach (var data in BankData)
+                        {
+                            Console.WriteLine($"{data.Key},{name},{data.Value[0]},{data.Value[1]}");
+                            Console.WriteLine($"{data.Key.Trim() == name.Trim()}");
+                        }
+
+                    }
                 }
             }
+
         }
 
         public void UpdateBankAccounts(string name, double savings, double checking)
@@ -39,9 +49,27 @@ namespace AtmMachine
             Console.WriteLine($"{name}, {savings}, {checking}");
             Console.ReadLine();
             double[] accounts = new double[] { savings, checking };
+            foreach (var data in BankData)
+            {
+                Console.WriteLine($"{data.Key}, {name} , {data.Value[0]} , {data.Value[1]}");
+            }
+            Console.WriteLine(BankData.ContainsKey(name.Trim()));
+            Console.WriteLine($"{name.GetType()}, {name}");
+            if(!BankData.ContainsKey(name.Trim()))
+            {
+                BankData[name.Trim()] = accounts;
+            } else
+            {
+                BankData[name.Trim()] = accounts;
+            }
 
             Console.WriteLine($"{accounts[0]}, {accounts[1]}");
-            BankData[name] = accounts;
+            foreach (var data in BankData)
+            {
+                Console.WriteLine($"Logging key... {data.Key}");
+                Console.WriteLine($"{data.Key} , {data.Value[0]}, {data.Value[1]}");
+            }
+            Console.ReadLine();
 
             //foreach(var data in BankData)
             //{
@@ -53,9 +81,11 @@ namespace AtmMachine
             {
                 foreach (var data in BankData)
                 {
+                    Console.WriteLine("Writing to file...");
                     writer.WriteLine($"{data.Key} , {data.Value[0]}, {data.Value[1]}");
                 }
             }
+            Console.WriteLine("-----------------------------------");
         }
 
         public UserData(string name, User user)
@@ -66,6 +96,12 @@ namespace AtmMachine
             PullBankAccountData(user);
             //UpdateBankAccounts(name, 0, 0);
             Console.WriteLine(FilePath);
+        }
+
+        public void LogTransactions(string action, double amount, string accName)
+        {
+            string Transaction = $"{action} {amount} {DateTime.Now} {accName}";
+            Console.WriteLine(Transaction);
         }
 
         //public WriteBankAcc{

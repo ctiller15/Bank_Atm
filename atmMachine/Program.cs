@@ -123,6 +123,9 @@ namespace AtmMachine
             }
 
             user.UserData.UpdateBankAccounts(user.Name, user.GetSavingsBalance(), user.GetCheckingBalance());
+            user.UserData.LogTransactions(action, amount, accType);
+            Console.WriteLine("We're logging!");
+            Console.ReadLine();
         }
 
         static bool HandleUserOption(string option, User user)
