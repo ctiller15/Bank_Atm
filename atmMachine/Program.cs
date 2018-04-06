@@ -121,6 +121,8 @@ namespace AtmMachine
             {
                 user.AdjustChecking(amount, action);
             }
+
+            user.UserData.UpdateBankAccounts(user.Name, user.GetSavingsBalance(), user.GetCheckingBalance());
         }
 
         static bool HandleUserOption(string option, User user)
@@ -163,7 +165,7 @@ namespace AtmMachine
             string userOption;
             bool isUserLoggedIn = true;
             var chris = new User("chris");
-            var chrisdata = new UserData(chris.Name);
+            //var chrisdata = new UserData(chris.Name);
 
 
             // Greet the user...

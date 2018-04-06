@@ -8,6 +8,8 @@ namespace AtmMachine
 {
     class User
     {
+        public UserData UserData { get; set; }
+
         public string Name { get; set; }
 
         private double savingsBalance = 0;
@@ -69,6 +71,7 @@ namespace AtmMachine
         public User(string name)
         {
             Name = name;
+            UserData = new UserData(name);
         }
     }
 }
