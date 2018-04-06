@@ -13,7 +13,7 @@ namespace AtmMachine
 
         private Dictionary<string, double[]> BankData = new Dictionary<string, double[]>();
 
-        public void PullBankAccountData()
+        public void PullBankAccountData(User user)
         {
             using (var reader = new StreamReader(FilePath + "bank_money.csv"))
             {
@@ -23,6 +23,7 @@ namespace AtmMachine
                     string name = line[0];
                     double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
                     BankData[name] = bankArr;
+                    user.SetAccounts(bankArr[0], bankArr[1]);
 
                     foreach(var data in BankData)
                     {
@@ -57,12 +58,12 @@ namespace AtmMachine
             }
         }
 
-        public UserData(string name)
+        public UserData(string name, User user)
         {
             FilePath = $"../../../userData/{name}/";
             Directory.CreateDirectory("../../../userData");
             Directory.CreateDirectory(FilePath);
-            PullBankAccountData();
+            PullBankAccountData(user);
             //UpdateBankAccounts(name, 0, 0);
             Console.WriteLine(FilePath);
         }

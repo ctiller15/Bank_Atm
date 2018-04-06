@@ -67,11 +67,18 @@ namespace AtmMachine
 
             }
         }
+
+        public void SetAccounts(double savingsAmt, double checkingAmt)
+        {
+            savingsBalance = savingsAmt;
+            checkingBalance = checkingAmt;
+        }
         
         public User(string name)
         {
             Name = name;
-            UserData = new UserData(name);
+            Console.WriteLine($"Current savings: {this.Name}");
+            UserData = new UserData(name, this);
         }
     }
 }
