@@ -10,9 +10,8 @@ namespace AtmMachine
     {
         static void IntroduceUser(User user)
         {
-            Console.WriteLine($"Hello User! Welcome to your bank account.\n" +
-                $"Checking: {user.GetCheckingBalance()}\n" +
-                $"Savings: {user.GetSavingsBalance()}");
+            Console.WriteLine($"Hello User! Welcome to your bank account.\n");
+            user.ShowUserAcc();
             Console.ReadLine();
         }
 
@@ -66,6 +65,7 @@ namespace AtmMachine
                 }
             }
             Console.WriteLine($"Finished {action}ing");
+            user.ShowUserAcc();
         }
 
         // In each case, withdraw from the first account, and deposit into the other!
@@ -90,8 +90,8 @@ namespace AtmMachine
             finally
             {
                 Console.WriteLine(amount);
-                Console.WriteLine($"Withdrawing: {acc1Funds}");
-                Console.WriteLine($"Depositing: {acc2Funds}");
+                //Console.WriteLine($"Withdrawing: {acc1Funds}");
+                //Console.WriteLine($"Depositing: {acc2Funds}");
                 if(amount > acc1Funds)
                 {
                     Console.WriteLine("That won't work! Aborting transfer");
@@ -107,11 +107,12 @@ namespace AtmMachine
                         accType1 = "savings";
                         accType2 = "checking";
                     }
-                    Console.WriteLine($"{accType1} , {accType2}");
+                    //Console.WriteLine($"{accType1} , {accType2}");
                     // Withdraw from the first account.
                     UpdateAccType(user, amount, accType1, "withdraw");
                     // Deposit into the second account.
                     UpdateAccType(user, amount, accType2, "deposit");
+                    user.ShowUserAcc();
                 }
             }
         }

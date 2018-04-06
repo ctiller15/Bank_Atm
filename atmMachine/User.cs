@@ -36,6 +36,12 @@ namespace AtmMachine
             Console.ReadLine();
         }
 
+        public void ShowUserAcc()
+        {
+            Console.WriteLine($"Checking: {GetCheckingBalance()}\n" +
+                $"Savings: {GetSavingsBalance()}");
+        }
+
         public double GetSavingsBalance()
         {
             return savingsBalance;
@@ -55,7 +61,7 @@ namespace AtmMachine
             {
                 savingsBalance = CheckValidWithdrawal(amount, savingsBalance);
 
-                DisplaySavingsBalance();
+                //DisplaySavingsBalance();
             }
         }
 
@@ -70,7 +76,7 @@ namespace AtmMachine
 
                 checkingBalance = CheckValidWithdrawal(amount, checkingBalance);
 
-                DisplayCheckingBalance();
+                //DisplayCheckingBalance();
             }
         }
         
