@@ -171,12 +171,13 @@ namespace AtmMachine
         {
             // Iniialize users database.
             var AllUsersDB = new UsersDB();
+            AllUsersDB.GetUsers();
             //const string FILE_PATH = "../../../files/bank_info.csv";
             string userOption;
             bool isUserLoggedIn = true;
             var chris = new User("chris", "1111");
-            AllUsersDB.AddUser("chris", "1111");
-            AllUsersDB.AddUser("notChris", "9999");
+            //AllUsersDB.AddUser("chris", "1111");
+            //AllUsersDB.AddUser("notChris", "9999");
 
             //var chrisdata = new UserData(chris.Name);
 
