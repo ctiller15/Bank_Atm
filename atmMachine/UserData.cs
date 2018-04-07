@@ -23,20 +23,15 @@ namespace AtmMachine
                     {
                         var line = reader.ReadLine().Split(',');
                         string name = line[0];
-                        Console.WriteLine(name);
-                        //Console.WriteLine(Type(name));
                         double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
-                        //Console.WriteLine($"{BankData[name]}");
                         BankData[name.Trim()] = bankArr;
-                        Console.WriteLine(BankData.ContainsKey(name.Trim()));
-                        Console.WriteLine($"{name.GetType()}, {name}");
                         user.SetAccounts(bankArr[0], bankArr[1]);
 
-                        foreach (var data in BankData)
-                        {
-                            Console.WriteLine($"{data.Key},{name},{data.Value[0]},{data.Value[1]}");
-                            Console.WriteLine($"{data.Key.Trim() == name.Trim()}");
-                        }
+                        //foreach (var data in BankData)
+                        //{
+                        //    Console.WriteLine($"{data.Key},{name},{data.Value[0]},{data.Value[1]}");
+                        //    Console.WriteLine($"{data.Key.Trim() == name.Trim()}");
+                        //}
 
                     }
                 }
@@ -46,8 +41,8 @@ namespace AtmMachine
 
         public void UpdateBankAccounts(string name, double savings, double checking)
         {
-            Console.WriteLine($"{name}, {savings}, {checking}");
-            Console.ReadLine();
+            //Console.WriteLine($"{name}, {savings}, {checking}");
+            //Console.ReadLine();
             double[] accounts = new double[] { savings, checking };
             foreach (var data in BankData)
             {

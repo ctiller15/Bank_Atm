@@ -175,6 +175,9 @@ namespace AtmMachine
             string userOption;
             bool isUserLoggedIn = true;
             var chris = new User("chris", "1111");
+            AllUsersDB.AddUser("chris", "1111");
+            AllUsersDB.AddUser("notChris", "9999");
+
             //var chrisdata = new UserData(chris.Name);
 
 
