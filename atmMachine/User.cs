@@ -12,6 +12,8 @@ namespace AtmMachine
 
         public string Name { get; set; }
 
+        public string PersonalIdentificationNumber { get; set; }
+
         private double savingsBalance = 0;
 
         private double checkingBalance = 0;
@@ -74,11 +76,13 @@ namespace AtmMachine
             checkingBalance = checkingAmt;
         }
         
-        public User(string name)
+        public User(string name, string PIN)
         {
             Name = name;
+            PersonalIdentificationNumber = PIN;
             Console.WriteLine($"Current savings: {this.Name}");
             UserData = new UserData(name, this);
+            Console.WriteLine($"Your user name is {name}, and your PIN is {PIN}");
         }
     }
 }
