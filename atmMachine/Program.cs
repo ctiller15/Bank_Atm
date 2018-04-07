@@ -169,6 +169,8 @@ namespace AtmMachine
 
         static void Main(string[] args)
         {
+            // Iniialize users database.
+            var AllUsersDB = new UsersDB();
             //const string FILE_PATH = "../../../files/bank_info.csv";
             string userOption;
             bool isUserLoggedIn = true;

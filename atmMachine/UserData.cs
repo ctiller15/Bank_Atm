@@ -90,8 +90,8 @@ namespace AtmMachine
 
         public UserData(string name, User user)
         {
-            FilePath = $"../../../userData/{name}/";
-            Directory.CreateDirectory("../../../userData");
+            FilePath = $"../../../userData/Users/{name}/";
+            Directory.CreateDirectory("../../../userData/Users");
             Directory.CreateDirectory(FilePath);
             PullBankAccountData(user);
             //UpdateBankAccounts(name, 0, 0);
