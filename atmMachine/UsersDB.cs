@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,14 @@ namespace AtmMachine
             //Console.WriteLine($"{username} , {pin}");
             //Console.WriteLine(UsersList);
             UsersList.Add(username.Trim(), pin.Trim());
-            foreach (var user in UsersList)
-            {
-                Console.WriteLine($"{user.Key} , {user.Value}");
+            using(var writer = new StreamWriter(FilePath)){
+                foreach (var user in UsersList)
+                {
+                    Console.WriteLine($"{user.Key} , {user.Value}");
+                    writer.WriteLine($"{user.Key}, {user.Value}");
+                }
             }
+
         }
     }
 }
