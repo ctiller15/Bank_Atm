@@ -194,6 +194,24 @@ namespace AtmMachine
             // Iniialize users database.
             var AllUsersDB = new UsersDB();
             AllUsersDB.GetUsers();
+
+            bool menuActive = true;
+
+            Console.WriteLine("What would you like to do?" +
+                "(1) Create Account" +
+                "(2) Log In" +
+                "(q) Exit program");
+
+            while(menuActive)
+            {
+
+            }
+
+            Console.WriteLine("What's your username?");
+
+
+            Console.WriteLine("What's your PIN?");
+
             //const string FILE_PATH = "../../../files/bank_info.csv";
             RunBank();
         }
