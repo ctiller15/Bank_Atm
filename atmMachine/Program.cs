@@ -167,12 +167,8 @@ namespace AtmMachine
             var user = new User(name, PIN);
         }
 
-        static void Main(string[] args)
+        static void RunBank()
         {
-            // Iniialize users database.
-            var AllUsersDB = new UsersDB();
-            AllUsersDB.GetUsers();
-            //const string FILE_PATH = "../../../files/bank_info.csv";
             string userOption;
             bool isUserLoggedIn = true;
             var chris = new User("chris", "1111");
@@ -191,6 +187,15 @@ namespace AtmMachine
                 userOption = MenuUserPrompt(chris);
                 isUserLoggedIn = HandleUserOption(userOption, chris);
             }
+        }
+
+        static void Main(string[] args)
+        {
+            // Iniialize users database.
+            var AllUsersDB = new UsersDB();
+            AllUsersDB.GetUsers();
+            //const string FILE_PATH = "../../../files/bank_info.csv";
+            RunBank();
         }
     }
 }
