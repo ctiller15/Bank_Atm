@@ -68,6 +68,16 @@ namespace AtmMachine
             Console.WriteLine("-----------------------------------");
         }
 
+        public void SaveAccount(Account acc)
+        {
+            Directory.CreateDirectory($"{FilePath}{acc.Name}");
+            using (var writer = new StreamWriter($"{FilePath}{acc.Name}/bank_money.csv"))
+            {
+                writer.WriteLine($"savings , {acc.GetSavingsBalance()}");
+                writer.WriteLine($"checking , {acc.GetCheckingBalance()}");
+            }
+        }
+
         public UserData(string name, User user)
         {
             FilePath = $"../../../userData/Users/{name}/";

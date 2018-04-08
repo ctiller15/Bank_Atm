@@ -23,6 +23,9 @@ namespace AtmMachine
             string AccName = Console.ReadLine();
             Account newAcc = new Account(AccName, Name);
             Console.WriteLine(newAcc);
+            Accounts.Add(newAcc);
+            // Now save the account.
+            UserData.SaveAccount(newAcc);
         }
 
         //private double savingsBalance = 0;
