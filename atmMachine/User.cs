@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,19 @@ namespace AtmMachine
             Accounts.Add(newAcc);
             // Now save the account.
             UserData.SaveAccount(newAcc);
+            Console.WriteLine($"Account: {newAcc.Name} successfully created");
+        }
+
+        public void GetAccounts()
+        {
+            Console.WriteLine($"Getting all {Name} bank accounts...");
+            var directories = Directory.GetDirectories($"../../../userData/Users/{Name}");
+            Console.WriteLine(directories);
+            foreach(var dir in directories)
+            {
+                // Apparently this is the best way to just get the names of the directories. I tried Path.GetDirectoryName and that instead returned the entire path.
+                Console.WriteLine(Path.GetFileName(dir));
+            }
         }
 
         //private double savingsBalance = 0;

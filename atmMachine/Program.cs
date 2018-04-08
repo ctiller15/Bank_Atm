@@ -272,6 +272,10 @@ namespace AtmMachine
                 } else if(choice == "2")
                 {
                     Console.WriteLine("Managing account...");
+                    // Show all accounts.
+                    user.GetAccounts();
+                    // Allow user to pick which account they want to work with.
+                    // THEN run bank with that account.
                 }
                 else if(choice == "3")
                 {
