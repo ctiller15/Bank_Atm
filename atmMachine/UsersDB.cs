@@ -29,7 +29,7 @@ namespace AtmMachine
                     Console.WriteLine($"{line[0]} {line[1]}");
                     if(!UsersList.ContainsKey(line[0]))
                     {
-                        UsersList.Add(line[0], line[1]);
+                        UsersList.Add(line[0].Trim(), line[1].Trim());
                     }
                 }
             }

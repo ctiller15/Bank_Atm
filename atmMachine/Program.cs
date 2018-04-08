@@ -169,11 +169,11 @@ namespace AtmMachine
             var user = new User(name, PIN);
         }
 
-        static void RunBank()
+        static void RunBank(string name, string pin)
         {
             string userOption;
             bool isUserLoggedIn = true;
-            var chris = new User("chris", "1111");
+            var user = new User(name, pin);
             //AllUsersDB.AddUser("chris", "1111");
             //AllUsersDB.AddUser("notChris", "9999");
 
@@ -181,13 +181,13 @@ namespace AtmMachine
 
 
             // Greet the user...
-            IntroduceUser(chris);
+            IntroduceUser(user);
 
             while (isUserLoggedIn)
             {
                 //Ask what they want to do next...
-                userOption = MenuUserPrompt(chris);
-                isUserLoggedIn = HandleUserOption(userOption, chris);
+                userOption = MenuUserPrompt(user);
+                isUserLoggedIn = HandleUserOption(userOption, user);
             }
         }
 
@@ -206,7 +206,28 @@ namespace AtmMachine
                 Console.WriteLine("username already taken. Sorry! Try again.");
             } else
             {
+                AllUsersDB.AddUser(username, pin);
                 Console.WriteLine($"Welcome to the bank of 'Give us your money'. Your username is {username} and your pin is {pin}");
+            }
+        }
+
+        static void LogUserIn()
+        {
+            Console.WriteLine("What is your username?");
+            string username = Console.ReadLine();
+
+            Console.WriteLine("What is your pin?");
+            string pin = Console.ReadLine();
+
+            if(AllUsersDB.UsersList.ContainsKey(username.Trim()))
+            {
+                Console.WriteLine(AllUsersDB.UsersList[username.Trim()]);
+                Console.WriteLine(pin.Trim());
+                if(AllUsersDB.UsersList[username.Trim()] == pin.Trim())
+                {
+                    Console.WriteLine($"Logging in as {username}...");
+                    RunBank(username, pin);
+                }
             }
         }
 
@@ -236,6 +257,7 @@ namespace AtmMachine
                 else if (userOption == "2")
                 {
                     Console.WriteLine("Logging in...");
+                    LogUserIn();
                 }
                 else if (userOption == "q")
                 {
@@ -248,13 +270,13 @@ namespace AtmMachine
                 }
             }
 
-            Console.WriteLine("What's your username?");
+            //Console.WriteLine("What's your username?");
 
 
-            Console.WriteLine("What's your PIN?");
+            //Console.WriteLine("What's your PIN?");
 
-            //const string FILE_PATH = "../../../files/bank_info.csv";
-            RunBank();
+            ////const string FILE_PATH = "../../../files/bank_info.csv";
+            //RunBank();
         }
     }
 }
