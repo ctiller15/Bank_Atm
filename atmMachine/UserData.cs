@@ -78,12 +78,32 @@ namespace AtmMachine
             }
         }
 
+        //public void PullAccountData(Account acc)
+        //{
+        //    if (File.Exists($"{FilePath}{acc.Name}/bank_money.csv"))
+        //    {
+        //        Console.WriteLine("File exists!");
+        //        using (var reader = new StreamReader($"{FilePath}{acc.Name}/bank_money.csv"))
+        //        {
+        //            while (reader.Peek() > -1)
+        //            {
+        //                var line = reader.ReadLine();
+        //                Console.WriteLine($"{ line[0]} {line[1]}");
+        //                //string name = line[0];
+        //                //double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
+        //                //BankData[name.Trim()] = bankArr;
+        //                //user.Accounts[0].SetAccounts(bankArr[0], bankArr[1]);
+        //            }
+        //        }
+        //    }
+        //}
+
         public UserData(string name, User user)
         {
             FilePath = $"../../../userData/Users/{name}/";
             Directory.CreateDirectory("../../../userData/Users");
             Directory.CreateDirectory(FilePath);
-            PullBankAccountData(user);
+            //PullBankAccountData(user);
         }
 
         public void LogTransactions(string action, double amount, string accName)

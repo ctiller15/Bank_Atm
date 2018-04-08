@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,48 @@ namespace AtmMachine
         private double savingsBalance = 0;
 
         private double checkingBalance = 0;
+
+        private string FilePath { get; set; }
+
+        public void PullAccountData()
+        {
+            double savings = 0;
+            double checking = 0;
+            if (File.Exists($"{FilePath}/bank_money.csv"))
+            {
+                Console.WriteLine("File exists!");
+                using (var reader = new StreamReader($"{FilePath}/bank_money.csv"))
+                {
+                    while (reader.Peek() > -1)
+                    {
+                        var line = reader.ReadLine().Split(',');
+
+
+                        Console.WriteLine($"{line[0]} : {line[1]}");
+                        // The first value of a line can be "savings" or "checking".
+                        // Save those values to a variable, and then set the values.
+                        if(line[0].ToLower().Trim() == "savings")
+                        {
+                            Console.WriteLine("Savings account");
+                            savings = Convert.ToDouble(line[1]);
+                        } else if(line[0].ToLower().Trim() == "checking")
+                        {
+                            Console.WriteLine("Checking account");
+                            checking = Convert.ToDouble(line[1]);
+                        }
+
+
+                        //string name = line[0];
+                        //double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
+                        //BankData[name.Trim()] = bankArr;
+                        //user.Accounts[0].SetAccounts(bankArr[0], bankArr[1]);
+                    }
+                }
+            }
+
+            SetAccounts(savings, checking);
+            ShowUserAcc();
+        }
 
         private double CheckValidWithdrawal(double withdrawn, double balance)
         {
@@ -82,6 +125,8 @@ namespace AtmMachine
         {
             Name = AccName;
             Owner = AccOwner;
+            FilePath = $"../../../userData/Users/{Owner}/{Name}";
+            PullAccountData();
         }
 
     }

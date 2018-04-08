@@ -39,6 +39,8 @@ namespace AtmMachine
             {
                 // Apparently this is the best way to just get the names of the directories. I tried Path.GetDirectoryName and that instead returned the entire path.
                 Console.WriteLine(Path.GetFileName(dir));
+                Account savedAcc = new Account(Path.GetFileName(dir), Name);
+                Accounts.Add(savedAcc);
             }
         }
 
