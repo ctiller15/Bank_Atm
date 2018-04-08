@@ -11,11 +11,12 @@ namespace AtmMachine
     {
         private string FilePath = "../../../userData/storedUsers.txt";
 
-        private Dictionary<string, string> UsersList = new Dictionary<string, string>();
+        public Dictionary<string, string> UsersList = new Dictionary<string, string>();
 
         public UsersDB()
         {
             Console.WriteLine(FilePath);
+            GetUsers();
         }
 
         public void GetUsers()
@@ -26,9 +27,10 @@ namespace AtmMachine
                 {
                     var line = reader.ReadLine().Split(',');
                     Console.WriteLine($"{line[0]} {line[1]}");
-                    UsersList.Add(line[0], line[1]);
-                    //morseMap.Add(Char.ToLower(Convert.ToChar(line[0])), line[1]);
-                    //reverseMorseMap.Add(line[1], Char.ToLower(Convert.ToChar(line[0])));
+                    if(!UsersList.ContainsKey(line[0]))
+                    {
+                        UsersList.Add(line[0], line[1]);
+                    }
                 }
             }
         }

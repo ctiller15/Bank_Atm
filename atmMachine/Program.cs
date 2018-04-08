@@ -8,6 +8,8 @@ namespace AtmMachine
 {
     class Program
     {
+        public static UsersDB AllUsersDB = new UsersDB();
+
         static void IntroduceUser(User user)
         {
             Console.WriteLine($"Hello User! Welcome to your bank account.\n");
@@ -189,22 +191,61 @@ namespace AtmMachine
             }
         }
 
+        static void CreateUserAccount()
+        {
+            //bool isComplete = false;
+
+            Console.WriteLine("What is your username?");
+            string username = Console.ReadLine();
+
+            Console.WriteLine("What is your pin?");
+            string pin = Console.ReadLine();
+
+            if (AllUsersDB.UsersList.ContainsKey(username.Trim()))
+            {
+                Console.WriteLine("username already taken. Sorry! Try again.");
+            } else
+            {
+                Console.WriteLine($"Welcome to the bank of 'Give us your money'. Your username is {username} and your pin is {pin}");
+            }
+        }
+
         static void Main(string[] args)
         {
             // Iniialize users database.
-            var AllUsersDB = new UsersDB();
+ 
             AllUsersDB.GetUsers();
 
             bool menuActive = true;
 
-            Console.WriteLine("What would you like to do?" +
-                "(1) Create Account" +
-                "(2) Log In" +
-                "(q) Exit program");
 
             while(menuActive)
             {
+                Console.WriteLine("What would you like to do?\n" +
+                "(1) Create Account\n" +
+                "(2) Log In\n" +
+                "(q) Exit program\n");
 
+                string userOption = Console.ReadLine();
+
+                if (userOption == "1")
+                {
+                    Console.WriteLine("Creating account...");
+                    CreateUserAccount();
+                }
+                else if (userOption == "2")
+                {
+                    Console.WriteLine("Logging in...");
+                }
+                else if (userOption == "q")
+                {
+                    Console.WriteLine("Ending program. Hope you enjoyed!");
+                    menuActive = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid option. Please try again.");
+                }
             }
 
             Console.WriteLine("What's your username?");
