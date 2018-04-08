@@ -43,7 +43,7 @@ namespace AtmMachine
             using(var writer = new StreamWriter(FilePath)){
                 foreach (var user in UsersList)
                 {
-                    Console.WriteLine($"{user.Key} , {user.Value}");
+                    //Console.WriteLine($"{user.Key} , {user.Value}");
                     writer.WriteLine($"{user.Key}, {user.Value}");
                 }
             }

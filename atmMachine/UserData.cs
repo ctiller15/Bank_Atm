@@ -90,7 +90,7 @@ namespace AtmMachine
             Directory.CreateDirectory(FilePath);
             PullBankAccountData(user);
             //UpdateBankAccounts(name, 0, 0);
-            Console.WriteLine(FilePath);
+            //Console.WriteLine(FilePath);
         }
 
         public void LogTransactions(string action, double amount, string accName)

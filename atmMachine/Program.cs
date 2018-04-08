@@ -12,7 +12,8 @@ namespace AtmMachine
 
         static void IntroduceUser(User user)
         {
-            Console.WriteLine($"Hello User! Welcome to your bank account.\n");
+            Console.Clear();
+            Console.WriteLine($"Hello {user.Name}! Welcome to your bank account.\n");
             user.ShowUserAcc();
             Console.ReadLine();
         }
@@ -155,7 +156,8 @@ namespace AtmMachine
                 TransferFunds(user.GetSavingsBalance(), user.GetCheckingBalance(), 2, user);
             } else if(option == "q")
             {
-                Console.WriteLine("Quitting program...");
+                Console.Clear();
+                Console.WriteLine($"Logging out of {user.Name}...");
                 return false;
             } else
             {
@@ -225,6 +227,7 @@ namespace AtmMachine
                     {
                         AllUsersDB.AddUser(username, pin);
                         Console.WriteLine($"Welcome to the bank of 'Give us your money'. Your username is {username} and your pin is {pin}");
+                        isComplete = true;
                     } else
                     {
                         Console.WriteLine("Invalid PIN. A valid PIN must be at least four numbers long");
@@ -245,8 +248,8 @@ namespace AtmMachine
 
             if(AllUsersDB.UsersList.ContainsKey(username.Trim()))
             {
-                Console.WriteLine(AllUsersDB.UsersList[username.Trim()]);
-                Console.WriteLine(pin.Trim());
+                //Console.WriteLine(AllUsersDB.UsersList[username.Trim()]);
+                //Console.WriteLine(pin.Trim());
                 if(AllUsersDB.UsersList[username.Trim()] == pin.Trim())
                 {
                     Console.WriteLine($"Logging in as {username}...");

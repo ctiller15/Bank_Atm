@@ -80,9 +80,9 @@ namespace AtmMachine
         {
             Name = name;
             PersonalIdentificationNumber = PIN;
-            Console.WriteLine($"Current savings: {this.Name}");
+            //Console.WriteLine($"Current savings: {this.Name}");
             UserData = new UserData(name, this);
-            Console.WriteLine($"Your user name is {name}, and your PIN is {PIN}");
+            //Console.WriteLine($"Your user name is {name}, and your PIN is {PIN}");
         }
     }
 }
