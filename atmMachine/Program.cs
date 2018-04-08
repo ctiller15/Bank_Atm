@@ -18,10 +18,10 @@ namespace AtmMachine
             Console.ReadLine();
         }
 
-        static string MenuUserPrompt(User user)
+        static string MenuUserPrompt(Account acc)
         {
             Console.Clear();
-            user.Accounts[0].ShowUserAcc();
+            acc.ShowUserAcc();
             Console.WriteLine("What transaction would you like to do next?\n\n" +
                 "(1) Deposit to savings\n" +
                 "(2) Deposit to checking\n" +
@@ -34,16 +34,16 @@ namespace AtmMachine
             return(Console.ReadLine());
         }
 
-        static void ModifyBankAcc(User user, string action, string accType)
+        static void ModifyBankAcc(Account useracc, string action, string accType)
         {
             double amount = 0;
             Console.WriteLine($"{accType}\n" +
                 $"How much would you like to {action}? ($)");
 
-            TrySubmittedVal(user, amount, accType, action, UpdateAccType);
+            TrySubmittedVal(useracc, amount, accType, action, UpdateAccType);
         }
 
-        static void TrySubmittedVal(User user, double amt, string type, string action, Action<User, double, string, string> Run)
+        static void TrySubmittedVal(Account acc, double amt, string type, string action, Action<Account, double, string, string> Run)
         {
             try
             {
@@ -56,12 +56,12 @@ namespace AtmMachine
             }
             finally
             {
-                Run(user, amt, type, action);
+                Run(acc, amt, type, action);
             }
         }
 
         // In each case, withdraw from the first account, and deposit into the other!
-        static void TransferFunds(double acc1Funds, double acc2Funds, int option, User user)
+        static void TransferFunds(double acc1Funds, double acc2Funds, int option, Account useracc)
         {
             double amount = 0;
             string accType1 = "";
@@ -97,64 +97,65 @@ namespace AtmMachine
                     Console.WriteLine("That won't work! Aborting transfer");
                 } else
                 {
-                    RunTransfer(user, amount, accType1, accType2);
+                    RunTransfer(useracc, amount, accType1, accType2);
                 }
             }
         }
 
-        static void RunTransfer(User user, double amt, string accType1, string accType2)
+        static void RunTransfer(Account useracc, double amt, string accType1, string accType2)
         {
 
             // Withdraw from the first account.
-            UpdateAccType(user, amt, accType1, "withdraw");
+            UpdateAccType(useracc, amt, accType1, "withdraw");
             // Deposit into the second account.
-            UpdateAccType(user, amt, accType2, "deposit");
+            UpdateAccType(useracc, amt, accType2, "deposit");
         }
 
-        static void UpdateAccType(User user, double amount, string accType, string action)
+        static void UpdateAccType(Account useracc, double amount, string accType, string action)
         {
             if (accType == "savings")
             {
-                user.Accounts[0].AdjustSavings(amount, action);
+                useracc.AdjustSavings(amount, action);
             }
             else if (accType == "checking")
             {
-                user.Accounts[0].AdjustChecking(amount, action);
+                useracc.AdjustChecking(amount, action);
             }
 
-            user.UserData.UpdateBankAccounts(user.Name, user.Accounts[0].GetSavingsBalance(), user.Accounts[0].GetCheckingBalance());
-            user.UserData.LogTransactions(action, amount, accType);
+            // Comment out and fix later.
+            //user.UserData.UpdateBankAccounts(user.Name, user.Accounts[0].GetSavingsBalance(), user.Accounts[0].GetCheckingBalance());
+            //user.UserData.LogTransactions(action, amount, accType);
             Console.WriteLine("We're logging!");
             Console.ReadLine();
         }
 
-        static bool HandleUserOption(string option, User user)
+        static bool HandleUserOption(string option, Account useracc)
         {
             if (option == "1")
             {
-                ModifyBankAcc(user, "deposit", "savings");
+                ModifyBankAcc(useracc, "deposit", "savings");
             }
             else if (option == "2")
             {
-                ModifyBankAcc(user, "deposit", "checking");
+                ModifyBankAcc(useracc, "deposit", "checking");
             }
             else if (option == "3")
             {
-                ModifyBankAcc(user, "withdraw", "savings");
+                ModifyBankAcc(useracc, "withdraw", "savings");
             }
             else if (option == "4")
             {
-                ModifyBankAcc(user, "withdraw", "checking");
+                ModifyBankAcc(useracc, "withdraw", "checking");
             } else if(option == "5")
             {
-                TransferFunds(user.Accounts[0].GetCheckingBalance(), user.Accounts[0].GetSavingsBalance(), 1, user);
+                TransferFunds(useracc.GetCheckingBalance(), useracc.GetSavingsBalance(), 1, useracc);
             } else if(option == "6")
             {
-                TransferFunds(user.Accounts[0].GetSavingsBalance(), user.Accounts[0].GetCheckingBalance(), 2, user);
+                TransferFunds(useracc.GetSavingsBalance(), useracc.GetCheckingBalance(), 2, useracc);
             } else if(option == "q")
             {
                 Console.Clear();
-                Console.WriteLine($"Logging out of {user.Name}...");
+                Console.WriteLine($"Logging out of {useracc.Name}...");
                 return false;
             } else
             {
@@ -168,20 +169,20 @@ namespace AtmMachine
             var user = new User(name, PIN);
         }
 
-        static void RunBank(string name, string pin)
+        static void RunBank(Account acc)
         {
             string userOption;
-            bool isUserLoggedIn = true;
-            var user = new User(name, pin);
+            bool isAccountLoggedIn = true;
+            //var user = new User(name, pin);
 
             // Greet the user...
-            IntroduceUser(user);
+            //IntroduceUser(user);
 
-            while (isUserLoggedIn)
+            while (isAccountLoggedIn)
             {
                 //Ask what they want to do next...
-                userOption = MenuUserPrompt(user);
-                isUserLoggedIn = HandleUserOption(userOption, user);
+                userOption = MenuUserPrompt(acc);
+                isAccountLoggedIn = HandleUserOption(userOption, acc);
             }
         }
 
@@ -274,21 +275,33 @@ namespace AtmMachine
                     Console.WriteLine("Managing account...");
                     // Show all accounts.
                     user.GetAccounts();
-                    // Allow user to pick which account they want to work with.
-                    user.ShowAccounts();
+
 
                     // Variables for when the user chooses the account and for the account to be referenced in the future.
-                    string accChoice = Console.ReadLine();
-                    int accRef;
+                    bool chosen = false;
 
-                    if(Convert.ToInt32(accChoice) > user.Accounts.Count() )
+                    while(!chosen)
                     {
-                        Console.WriteLine("not a valid option");
-                    } else
-                    {
-                        accRef = Convert.ToInt32(accChoice) - 1;
+                        // Allow user to pick which account they want to work with.
+                        user.ShowAccounts();
+
+                        string accChoice = Console.ReadLine();
+                        int accRef;
+
+                        if (Convert.ToInt32(accChoice) > user.Accounts.Count())
+                        {
+                            Console.WriteLine("not a valid option");
+                        }
+                        else
+                        {
+                            accRef = Convert.ToInt32(accChoice) - 1;
+                            Console.WriteLine("Opening account...");
+                            chosen = true;
+                            RunBank(user.Accounts[accRef]);
+                        }
+                        // THEN run bank with that account.
                     }
-                    // THEN run bank with that account.
+
                 }
                 else if(choice == "3")
                 {
