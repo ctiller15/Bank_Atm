@@ -193,22 +193,46 @@ namespace AtmMachine
 
         static void CreateUserAccount()
         {
-            //bool isComplete = false;
+            bool isComplete = false;
+            Console.Clear();
+            Console.WriteLine("Creating account:");
 
-            Console.WriteLine("What is your username?");
-            string username = Console.ReadLine();
-
-            Console.WriteLine("What is your pin?");
-            string pin = Console.ReadLine();
-
-            if (AllUsersDB.UsersList.ContainsKey(username.Trim()))
+            while(!isComplete)
             {
-                Console.WriteLine("username already taken. Sorry! Try again.");
-            } else
-            {
-                AllUsersDB.AddUser(username, pin);
-                Console.WriteLine($"Welcome to the bank of 'Give us your money'. Your username is {username} and your pin is {pin}");
+                Console.WriteLine("What is your username? \n" +
+                    "(q = quit)");
+                string username = Console.ReadLine();
+
+                if (AllUsersDB.UsersList.ContainsKey(username.Trim()) && username.Count() > 1)
+                {
+                    Console.WriteLine("username already taken. Sorry! Try again.");
+                }
+                else if (username == "q")
+                {
+                    Console.WriteLine("Returning to main menu...");
+                    isComplete = true;
+                }
+                else
+                {
+                    Console.WriteLine("What is your pin?\n" +
+                        "(q = quit)");
+                    string pin = Console.ReadLine();
+
+                    if(pin == "q")
+                    {
+                        isComplete = true;
+                    } else if(pin.Count() >= 4)
+                    {
+                        AllUsersDB.AddUser(username, pin);
+                        Console.WriteLine($"Welcome to the bank of 'Give us your money'. Your username is {username} and your pin is {pin}");
+                    } else
+                    {
+                        Console.WriteLine("Invalid PIN. A valid PIN must be at least four numbers long");
+                    }
+
+                }
             }
+
         }
 
         static void LogUserIn()
@@ -251,12 +275,12 @@ namespace AtmMachine
 
                 if (userOption == "1")
                 {
-                    Console.WriteLine("Creating account...");
+                    //Console.WriteLine("Creating account...");
                     CreateUserAccount();
                 }
                 else if (userOption == "2")
                 {
-                    Console.WriteLine("Logging in...");
+                    //Console.WriteLine("Logging in...");
                     LogUserIn();
                 }
                 else if (userOption == "q")

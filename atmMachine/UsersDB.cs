@@ -15,7 +15,7 @@ namespace AtmMachine
 
         public UsersDB()
         {
-            Console.WriteLine(FilePath);
+            //Console.WriteLine(FilePath);
             GetUsers();
         }
 
@@ -26,7 +26,7 @@ namespace AtmMachine
                 while (reader.Peek() > -1)
                 {
                     var line = reader.ReadLine().Split(',');
-                    Console.WriteLine($"{line[0]} {line[1]}");
+                    //Console.WriteLine($"{line[0]} {line[1]}");
                     if(!UsersList.ContainsKey(line[0]))
                     {
                         UsersList.Add(line[0].Trim(), line[1].Trim());
