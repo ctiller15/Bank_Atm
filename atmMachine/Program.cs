@@ -275,6 +275,19 @@ namespace AtmMachine
                     // Show all accounts.
                     user.GetAccounts();
                     // Allow user to pick which account they want to work with.
+                    user.ShowAccounts();
+
+                    // Variables for when the user chooses the account and for the account to be referenced in the future.
+                    string accChoice = Console.ReadLine();
+                    int accRef;
+
+                    if(Convert.ToInt32(accChoice) > user.Accounts.Count() )
+                    {
+                        Console.WriteLine("not a valid option");
+                    } else
+                    {
+                        accRef = Convert.ToInt32(accChoice) - 1;
+                    }
                     // THEN run bank with that account.
                 }
                 else if(choice == "3")
