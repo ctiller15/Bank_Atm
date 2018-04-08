@@ -73,5 +73,16 @@ namespace AtmMachine
             checkingBalance = checkingAmt;
         }
 
+        public Account()
+        {
+
+        }
+
+        public Account(string AccName, string AccOwner)
+        {
+            Name = AccName;
+            Owner = AccOwner;
+        }
+
     }
 }

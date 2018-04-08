@@ -16,6 +16,15 @@ namespace AtmMachine
 
         public string PersonalIdentificationNumber { get; set; }
 
+        public void CreateAccount()
+        {
+            Console.WriteLine("What is the name of the account?");
+
+            string AccName = Console.ReadLine();
+            Account newAcc = new Account(AccName, Name);
+            Console.WriteLine(newAcc);
+        }
+
         //private double savingsBalance = 0;
 
         //private double checkingBalance = 0;
@@ -79,7 +88,7 @@ namespace AtmMachine
         {
             Name = name;
             PersonalIdentificationNumber = PIN;
-            Accounts.Add(new Account());
+            //Accounts.Add(new Account());
             UserData = new UserData(name, this);
             Console.WriteLine(Accounts);
         }

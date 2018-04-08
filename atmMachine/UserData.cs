@@ -25,7 +25,7 @@ namespace AtmMachine
                         string name = line[0];
                         double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
                         BankData[name.Trim()] = bankArr;
-                        user.Accounts[0].SetAccounts(bankArr[0], bankArr[1]);
+                        //user.Accounts[0].SetAccounts(bankArr[0], bankArr[1]);
                     }
                 }
             }

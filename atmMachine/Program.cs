@@ -268,6 +268,7 @@ namespace AtmMachine
                 if(choice == "1")
                 {
                     Console.WriteLine("Creating new account...");
+                    user.CreateAccount();
                 } else if(choice == "2")
                 {
                     Console.WriteLine("Managing account...");
