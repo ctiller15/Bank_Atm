@@ -14,14 +14,14 @@ namespace AtmMachine
         {
             Console.Clear();
             Console.WriteLine($"Hello {user.Name}! Welcome to your bank account.\n");
-            user.ShowUserAcc();
+            user.Accounts[0].ShowUserAcc();
             Console.ReadLine();
         }
 
         static string MenuUserPrompt(User user)
         {
             Console.Clear();
-            user.ShowUserAcc();
+            user.Accounts[0].ShowUserAcc();
             Console.WriteLine("What transaction would you like to do next?\n\n" +
                 "(1) Deposit to savings\n" +
                 "(2) Deposit to checking\n" +
@@ -115,14 +115,14 @@ namespace AtmMachine
         {
             if (accType == "savings")
             {
-                user.AdjustSavings(amount, action);
+                user.Accounts[0].AdjustSavings(amount, action);
             }
             else if (accType == "checking")
             {
-                user.AdjustChecking(amount, action);
+                user.Accounts[0].AdjustChecking(amount, action);
             }
 
-            user.UserData.UpdateBankAccounts(user.Name, user.GetSavingsBalance(), user.GetCheckingBalance());
+            user.UserData.UpdateBankAccounts(user.Name, user.Accounts[0].GetSavingsBalance(), user.Accounts[0].GetCheckingBalance());
             user.UserData.LogTransactions(action, amount, accType);
             Console.WriteLine("We're logging!");
             Console.ReadLine();
@@ -147,10 +147,10 @@ namespace AtmMachine
                 ModifyBankAcc(user, "withdraw", "checking");
             } else if(option == "5")
             {
-                TransferFunds(user.GetCheckingBalance(), user.GetSavingsBalance(), 1, user);
+                TransferFunds(user.Accounts[0].GetCheckingBalance(), user.Accounts[0].GetSavingsBalance(), 1, user);
             } else if(option == "6")
             {
-                TransferFunds(user.GetSavingsBalance(), user.GetCheckingBalance(), 2, user);
+                TransferFunds(user.Accounts[0].GetSavingsBalance(), user.Accounts[0].GetCheckingBalance(), 2, user);
             } else if(option == "q")
             {
                 Console.Clear();
@@ -243,21 +243,61 @@ namespace AtmMachine
                 if(AllUsersDB.UsersList[username.Trim()] == pin.Trim())
                 {
                     Console.WriteLine($"Logging in as {username}...");
-                    RunBank(username, pin);
+                    // Add a 'choose account' screen first!
+                    HandleBankAccounts(username, pin);
+                    //RunBank(username, pin);
                 }
             }
         }
 
-        static void Main(string[] args)
+        static void HandleBankAccounts(string name, string pin)
         {
-            // Iniialize users database.
- 
-            AllUsersDB.GetUsers();
+            var user = new User(name, pin);
+            bool handled = false;
 
+            while(!handled)
+            {
+                Console.WriteLine("What would you like to do?\n" +
+                    "(1) Create a new bank account. \n" +
+                    "(2) Manage an account\n" +
+                    "(3) Close an account\n" +
+                    "(q) Exit to previous menu");
+
+                string choice = Console.ReadLine();
+                
+                if(choice == "1")
+                {
+                    Console.WriteLine("Creating new account...");
+                } else if(choice == "2")
+                {
+                    Console.WriteLine("Managing account...");
+                }
+                else if(choice == "3")
+                {
+                    Console.WriteLine("Closing account...");
+                }
+                else if(choice == "q")
+                {
+                    Console.WriteLine("Exiting to previous menu...");
+                    handled = true;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Choice.");
+                }
+            }
+            
+
+            // List out all accounts here.
+
+
+        }
+
+        static void LoggedInMenu()
+        {
             bool menuActive = true;
 
-
-            while(menuActive)
+            while (menuActive)
             {
                 Console.WriteLine("What would you like to do?\n" +
                 "(1) Create Account\n" +
@@ -284,6 +324,46 @@ namespace AtmMachine
                     Console.WriteLine("Invalid option. Please try again.");
                 }
             }
+        }
+
+        static void Main(string[] args)
+        {
+            // Iniialize users database.
+ 
+            AllUsersDB.GetUsers();
+
+            LoggedInMenu();
+
+            //bool menuActive = true;
+
+
+            //while(menuActive)
+            //{
+            //    Console.WriteLine("What would you like to do?\n" +
+            //    "(1) Create Account\n" +
+            //    "(2) Log In\n" +
+            //    "(q) Exit program\n");
+
+            //    string userOption = Console.ReadLine();
+
+            //    if (userOption == "1")
+            //    {
+            //        CreateUserAccount();
+            //    }
+            //    else if (userOption == "2")
+            //    {
+            //        LogUserIn();
+            //    }
+            //    else if (userOption == "q")
+            //    {
+            //        Console.WriteLine("Ending program. Hope you enjoyed!");
+            //        menuActive = false;
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Invalid option. Please try again.");
+            //    }
+            //}
         }
     }
 }
