@@ -53,7 +53,6 @@ namespace AtmMachine
             } else if(option == "withdraw")
             {
                 savingsBalance = CheckValidWithdrawal(amount, savingsBalance);
-
             }
         }
 
@@ -64,9 +63,7 @@ namespace AtmMachine
                 checkingBalance += amount;
             } else if(option == "withdraw")
             {
-
                 checkingBalance = CheckValidWithdrawal(amount, checkingBalance);
-
             }
         }
 
@@ -80,9 +77,7 @@ namespace AtmMachine
         {
             Name = name;
             PersonalIdentificationNumber = PIN;
-            //Console.WriteLine($"Current savings: {this.Name}");
             UserData = new UserData(name, this);
-            //Console.WriteLine($"Your user name is {name}, and your PIN is {PIN}");
         }
     }
 }

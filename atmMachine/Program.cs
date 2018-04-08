@@ -41,7 +41,6 @@ namespace AtmMachine
                 $"How much would you like to {action}? ($)");
 
             TrySubmittedVal(user, amount, accType, action, UpdateAccType);
-
         }
 
         static void TrySubmittedVal(User user, double amt, string type, string action, Action<User, double, string, string> Run)
@@ -49,8 +48,6 @@ namespace AtmMachine
             try
             {
                 amt = Convert.ToDouble(Console.ReadLine());
-                //Console.WriteLine(amount);
-
             }
             catch (FormatException err)
             {
@@ -176,11 +173,6 @@ namespace AtmMachine
             string userOption;
             bool isUserLoggedIn = true;
             var user = new User(name, pin);
-            //AllUsersDB.AddUser("chris", "1111");
-            //AllUsersDB.AddUser("notChris", "9999");
-
-            //var chrisdata = new UserData(chris.Name);
-
 
             // Greet the user...
             IntroduceUser(user);
@@ -248,8 +240,6 @@ namespace AtmMachine
 
             if(AllUsersDB.UsersList.ContainsKey(username.Trim()))
             {
-                //Console.WriteLine(AllUsersDB.UsersList[username.Trim()]);
-                //Console.WriteLine(pin.Trim());
                 if(AllUsersDB.UsersList[username.Trim()] == pin.Trim())
                 {
                     Console.WriteLine($"Logging in as {username}...");
@@ -278,12 +268,10 @@ namespace AtmMachine
 
                 if (userOption == "1")
                 {
-                    //Console.WriteLine("Creating account...");
                     CreateUserAccount();
                 }
                 else if (userOption == "2")
                 {
-                    //Console.WriteLine("Logging in...");
                     LogUserIn();
                 }
                 else if (userOption == "q")
@@ -296,14 +284,6 @@ namespace AtmMachine
                     Console.WriteLine("Invalid option. Please try again.");
                 }
             }
-
-            //Console.WriteLine("What's your username?");
-
-
-            //Console.WriteLine("What's your PIN?");
-
-            ////const string FILE_PATH = "../../../files/bank_info.csv";
-            //RunBank();
         }
     }
 }

@@ -26,13 +26,6 @@ namespace AtmMachine
                         double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
                         BankData[name.Trim()] = bankArr;
                         user.SetAccounts(bankArr[0], bankArr[1]);
-
-                        //foreach (var data in BankData)
-                        //{
-                        //    Console.WriteLine($"{data.Key},{name},{data.Value[0]},{data.Value[1]}");
-                        //    Console.WriteLine($"{data.Key.Trim() == name.Trim()}");
-                        //}
-
                     }
                 }
             }
@@ -41,8 +34,6 @@ namespace AtmMachine
 
         public void UpdateBankAccounts(string name, double savings, double checking)
         {
-            //Console.WriteLine($"{name}, {savings}, {checking}");
-            //Console.ReadLine();
             double[] accounts = new double[] { savings, checking };
             foreach (var data in BankData)
             {
@@ -66,12 +57,6 @@ namespace AtmMachine
             }
             Console.ReadLine();
 
-            //foreach(var data in BankData)
-            //{
-            //    Console.WriteLine($"{data.Key} , {data.Value[0]}, {data.Value[1]}");
-            //}
-            //Console.ReadLine();
-
             using (var writer = new StreamWriter(FilePath + "bank_money.csv"))
             {
                 foreach (var data in BankData)
@@ -89,8 +74,6 @@ namespace AtmMachine
             Directory.CreateDirectory("../../../userData/Users");
             Directory.CreateDirectory(FilePath);
             PullBankAccountData(user);
-            //UpdateBankAccounts(name, 0, 0);
-            //Console.WriteLine(FilePath);
         }
 
         public void LogTransactions(string action, double amount, string accName)
@@ -102,10 +85,6 @@ namespace AtmMachine
                 writer.WriteLine(Transaction);
             }
         }
-
-        //public WriteBankAcc{
-            
-        ////}
     }
 }
 
