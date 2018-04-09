@@ -24,32 +24,26 @@ namespace AtmMachine
             double checking = 0;
             if (File.Exists($"{FilePath}/bank_money.csv"))
             {
-                Console.WriteLine("File exists!");
+                //Console.WriteLine("File exists!");
                 using (var reader = new StreamReader($"{FilePath}/bank_money.csv"))
                 {
                     while (reader.Peek() > -1)
                     {
                         var line = reader.ReadLine().Split(',');
-
-
-                        Console.WriteLine($"{line[0]} : {line[1]}");
+                        
                         // The first value of a line can be "savings" or "checking".
                         // Save those values to a variable, and then set the values.
                         if(line[0].ToLower().Trim() == "savings")
                         {
-                            Console.WriteLine("Savings account");
                             savings = Convert.ToDouble(line[1]);
                         } else if(line[0].ToLower().Trim() == "checking")
                         {
-                            Console.WriteLine("Checking account");
                             checking = Convert.ToDouble(line[1]);
                         }
                     }
                 }
             }
-
             SetAccounts(savings, checking);
-            ShowUserAcc();
         }
 
         private double CheckValidWithdrawal(double withdrawn, double balance)

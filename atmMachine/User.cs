@@ -34,16 +34,16 @@ namespace AtmMachine
         {
             Console.WriteLine($"Getting all {Name} bank accounts...");
             var directories = Directory.GetDirectories($"../../../userData/Users/{Name}");
-            Console.WriteLine(directories);
+            //Console.WriteLine(directories);
 
 
             foreach(var dir in directories)
             {
                 // Apparently this is the best way to just get the names of the directories. I tried Path.GetDirectoryName and that instead returned the entire path.
-                Console.WriteLine(Path.GetFileName(dir));
+                //Console.WriteLine(Path.GetFileName(dir));
                 var nameCheck = Accounts.Where(p => p.Name.Trim() == Path.GetFileName(dir).Trim());
-                Console.WriteLine(nameCheck);
-                Console.WriteLine(nameCheck.Count());
+                //Console.WriteLine(nameCheck);
+                //Console.WriteLine(nameCheck.Count());
                 if (nameCheck.Count() == 0)
                 {
                     Account savedAcc = new Account(Path.GetFileName(dir), Name);
@@ -54,82 +54,34 @@ namespace AtmMachine
 
         }
 
-        public void ShowAccounts()
+        public bool ShowAccounts()
         {
-            Console.WriteLine("Choose an account\n");
-            for(int i = 0; i < Accounts.Count(); i++)
+            if(Accounts.Count() > 0)
             {
-                Console.WriteLine($"({i + 1}) {Accounts[i].Name}");
+                Console.WriteLine("Choose an account\n");
+
+                for (int i = 0; i < Accounts.Count(); i++)
+                {
+                    Console.WriteLine($"({i + 1}) {Accounts[i].Name}");
+                }
+                Console.WriteLine("(q) Quit");
+                return true;
+            } else
+            {
+                Console.WriteLine("You don't have any accounts yet! Please create one.\n\n");
+                return false;
             }
 
+
         }
-
-        //private double savingsBalance = 0;
-
-        //private double checkingBalance = 0;
-
-        //private double CheckValidWithdrawal(double withdrawn, double balance)
-        //{
-        //    if(withdrawn > balance)
-        //    {
-        //        Console.WriteLine("You don't have enough money!!!");
-        //        return balance;
-        //    } else
-        //    {
-        //        return(balance - withdrawn);
-        //    }
-        //}
-
-        //public void ShowUserAcc()
-        //{
-        //    Console.WriteLine($"Checking: {GetCheckingBalance()}\n" +
-        //        $"Savings: {GetSavingsBalance()}\n");
-        //}
-
-        //public double GetSavingsBalance()
-        //{
-        //    return savingsBalance;
-        //}
-        //public double GetCheckingBalance()
-        //{
-        //    return checkingBalance;
-        //}
-
-        //public void AdjustSavings(double amount, string option)
-        //{
-        //    if(option == "deposit")
-        //    {
-        //        savingsBalance += amount;
-        //    } else if(option == "withdraw")
-        //    {
-        //        savingsBalance = CheckValidWithdrawal(amount, savingsBalance);
-        //    }
-        //}
-
-        //public void AdjustChecking(double amount, string option)
-        //{
-        //    if(option == "deposit")
-        //    {
-        //        checkingBalance += amount;
-        //    } else if(option == "withdraw")
-        //    {
-        //        checkingBalance = CheckValidWithdrawal(amount, checkingBalance);
-        //    }
-        //}
-
-        //public void SetAccounts(double savingsAmt, double checkingAmt)
-        //{
-        //    savingsBalance = savingsAmt;
-        //    checkingBalance = checkingAmt;
-        //}
         
         public User(string name, string PIN)
         {
+            // Initializing a user and the database connection.
             Name = name;
             PersonalIdentificationNumber = PIN;
-            //Accounts.Add(new Account());
             UserData = new UserData(name);
-            Console.WriteLine(Accounts);
+
         }
     }
 }

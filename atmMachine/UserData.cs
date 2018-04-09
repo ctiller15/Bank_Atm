@@ -13,24 +13,22 @@ namespace AtmMachine
 
         private Dictionary<string, double[]> BankData = new Dictionary<string, double[]>();
 
-        public void PullBankAccountData(User user)
-        {
-            if(File.Exists(FilePath + "bank_money.csv"))
-            {
-                using (var reader = new StreamReader(FilePath + "bank_money.csv"))
-                {
-                    while (reader.Peek() > -1)
-                    {
-                        var line = reader.ReadLine().Split(',');
-                        string name = line[0];
-                        double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
-                        BankData[name.Trim()] = bankArr;
-                        //user.Accounts[0].SetAccounts(bankArr[0], bankArr[1]);
-                    }
-                }
-            }
-
-        }
+        //public void PullBankAccountData(User user)
+        //{
+        //    if(File.Exists(FilePath + "bank_money.csv"))
+        //    {
+        //        using (var reader = new StreamReader(FilePath + "bank_money.csv"))
+        //        {
+        //            while (reader.Peek() > -1)
+        //            {
+        //                var line = reader.ReadLine().Split(',');
+        //                string name = line[0];
+        //                double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
+        //                BankData[name.Trim()] = bankArr;
+        //            }
+        //        }
+        //    }
+        //}
 
         //public void UpdateBankAccounts(string name, double savings, double checking)
         public void UpdateBankAccounts(Account acc)
@@ -82,26 +80,6 @@ namespace AtmMachine
             }
         }
 
-        //public void PullAccountData(Account acc)
-        //{
-        //    if (File.Exists($"{FilePath}{acc.Name}/bank_money.csv"))
-        //    {
-        //        Console.WriteLine("File exists!");
-        //        using (var reader = new StreamReader($"{FilePath}{acc.Name}/bank_money.csv"))
-        //        {
-        //            while (reader.Peek() > -1)
-        //            {
-        //                var line = reader.ReadLine();
-        //                Console.WriteLine($"{ line[0]} {line[1]}");
-        //                //string name = line[0];
-        //                //double[] bankArr = new double[] { Convert.ToDouble(line[1]), Convert.ToDouble(line[2]) };
-        //                //BankData[name.Trim()] = bankArr;
-        //                //user.Accounts[0].SetAccounts(bankArr[0], bankArr[1]);
-        //            }
-        //        }
-        //    }
-        //}
-
         public UserData(string name)
         {
             FilePath = $"../../../userData/Users/{name}/";
@@ -110,15 +88,16 @@ namespace AtmMachine
             //PullBankAccountData(user);
         }
 
-        public void LogTransactions(string action, double amount, string accName)
+
+        // TODO: Adjust this so it outputs in the right location.
+        public void LogTransactions(string action, double amount, Account acc)
         {
-            string Transaction = $"{action} {amount:C2} {DateTime.Now} {accName}\n";
+            string Transaction = $"{action} {amount:C2} {DateTime.Now} {acc.Name}\n";
             Console.WriteLine(Transaction);
-            using (StreamWriter writer = File.AppendText(FilePath + "transaction_log.txt"))
+            using (StreamWriter writer = File.AppendText($"{FilePath}{acc.Name}/transaction_log.txt"))
             {
                 writer.WriteLine(Transaction);
             }
         }
     }
 }
-

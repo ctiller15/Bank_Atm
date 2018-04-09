@@ -8,6 +8,7 @@ namespace AtmMachine
 {
     class Program
     {
+        // TODO: Create a UI class to handle all visual aspects of the app.
         public static UsersDB AllUsersDB = new UsersDB();
 
         static void IntroduceUser(User user)
@@ -124,7 +125,7 @@ namespace AtmMachine
 
             UserData userdata = new UserData(useracc.Owner);
             userdata.UpdateBankAccounts(useracc);
-            userdata.LogTransactions(action, amount, accType);
+            userdata.LogTransactions(action, amount, useracc);
 
             Console.WriteLine("We're logging!");
             Console.ReadLine();
@@ -280,32 +281,41 @@ namespace AtmMachine
                     while(!chosen)
                     {
                         // Allow user to pick which account they want to work with.
-                        user.ShowAccounts();
+                        bool hasAccount = user.ShowAccounts();
 
-                        string accChoice = Console.ReadLine();
-                        int accRef;
-                        bool isNumeric = int.TryParse(accChoice, out int n);
-                        if(isNumeric)
+                        if(hasAccount)
                         {
-                            if (Convert.ToInt32(accChoice) > user.Accounts.Count())
+                            string accChoice = Console.ReadLine();
+                            int accRef;
+                            bool isNumeric = int.TryParse(accChoice, out int n);
+                            if (isNumeric)
                             {
-                                Console.WriteLine("not a valid option");
+                                if (Convert.ToInt32(accChoice) > user.Accounts.Count())
+                                {
+                                    Console.WriteLine("not a valid option");
+                                }
+                                else
+                                {
+                                    accRef = Convert.ToInt32(accChoice) - 1;
+                                    Console.WriteLine("Opening account...");
+                                    chosen = true;
+                                    RunBank(user.Accounts[accRef]);
+                                }
+                            }
+                            else if (accChoice == "q")
+                            {
+                                Console.WriteLine("Exiting selection...");
+                                chosen = true;
                             }
                             else
                             {
-                                accRef = Convert.ToInt32(accChoice) - 1;
-                                Console.WriteLine("Opening account...");
-                                chosen = true;
-                                RunBank(user.Accounts[accRef]);
+                                Console.WriteLine("Invalid option");
                             }
-                        } else if(accChoice == "q")
-                        {
-                            Console.WriteLine("Exiting selection...");
-                            chosen = true;
                         } else
                         {
-                            Console.WriteLine("Invalid option");
+                            chosen = true;
                         }
+
 
                         // THEN run bank with that account.
                     }
