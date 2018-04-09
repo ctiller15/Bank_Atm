@@ -64,7 +64,9 @@ namespace AtmMachine
                 foreach (var data in BankData)
                 {
                     Console.WriteLine("Writing to file...");
-                    writer.WriteLine($"{data.Key} , {data.Value[0]}, {data.Value[1]}");
+                    //writer.WriteLine($"{data.Key} , {data.Value[0]}, {data.Value[1]}");
+                    writer.WriteLine($"savings , {data.Value[0]}");
+                    writer.WriteLine($"checking , {data.Value[1]}");
                 }
             }
             Console.WriteLine("-----------------------------------");
