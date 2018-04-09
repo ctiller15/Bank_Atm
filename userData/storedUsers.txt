@@ -1,1 +1,2 @@
 chris, 1111
+stanley, 6666
