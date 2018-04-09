@@ -126,9 +126,6 @@ namespace AtmMachine
             userdata.UpdateBankAccounts(useracc);
             userdata.LogTransactions(action, amount, accType);
 
-            // Comment out and fix later.
-            //user.UserData.UpdateBankAccounts(useracc.Owner, GetSavingsBalance(), GetCheckingBalance());
-            //user.UserData.LogTransactions(action, amount, accType);
             Console.WriteLine("We're logging!");
             Console.ReadLine();
         }
@@ -177,10 +174,6 @@ namespace AtmMachine
         {
             string userOption;
             bool isAccountLoggedIn = true;
-            //var user = new User(name, pin);
-
-            // Greet the user...
-            //IntroduceUser(user);
 
             while (isAccountLoggedIn)
             {
@@ -291,18 +284,29 @@ namespace AtmMachine
 
                         string accChoice = Console.ReadLine();
                         int accRef;
-
-                        if (Convert.ToInt32(accChoice) > user.Accounts.Count())
+                        bool isNumeric = int.TryParse(accChoice, out int n);
+                        if(isNumeric)
                         {
-                            Console.WriteLine("not a valid option");
-                        }
-                        else
+                            if (Convert.ToInt32(accChoice) > user.Accounts.Count())
+                            {
+                                Console.WriteLine("not a valid option");
+                            }
+                            else
+                            {
+                                accRef = Convert.ToInt32(accChoice) - 1;
+                                Console.WriteLine("Opening account...");
+                                chosen = true;
+                                RunBank(user.Accounts[accRef]);
+                            }
+                        } else if(accChoice == "q")
                         {
-                            accRef = Convert.ToInt32(accChoice) - 1;
-                            Console.WriteLine("Opening account...");
+                            Console.WriteLine("Exiting selection...");
                             chosen = true;
-                            RunBank(user.Accounts[accRef]);
+                        } else
+                        {
+                            Console.WriteLine("Invalid option");
                         }
+
                         // THEN run bank with that account.
                     }
 
@@ -368,37 +372,6 @@ namespace AtmMachine
             AllUsersDB.GetUsers();
 
             LoggedInMenu();
-
-            //bool menuActive = true;
-
-
-            //while(menuActive)
-            //{
-            //    Console.WriteLine("What would you like to do?\n" +
-            //    "(1) Create Account\n" +
-            //    "(2) Log In\n" +
-            //    "(q) Exit program\n");
-
-            //    string userOption = Console.ReadLine();
-
-            //    if (userOption == "1")
-            //    {
-            //        CreateUserAccount();
-            //    }
-            //    else if (userOption == "2")
-            //    {
-            //        LogUserIn();
-            //    }
-            //    else if (userOption == "q")
-            //    {
-            //        Console.WriteLine("Ending program. Hope you enjoyed!");
-            //        menuActive = false;
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("Invalid option. Please try again.");
-            //    }
-            //}
         }
     }
 }
