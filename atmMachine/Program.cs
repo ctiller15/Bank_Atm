@@ -231,22 +231,48 @@ namespace AtmMachine
 
         static void LogUserIn()
         {
-            Console.WriteLine("What is your username?");
-            string username = Console.ReadLine();
+            bool userLoginMenu = true;
 
-            Console.WriteLine("What is your pin?");
-            string pin = Console.ReadLine();
-
-            if(AllUsersDB.UsersList.ContainsKey(username.Trim()))
+            while (userLoginMenu)
             {
-                if(AllUsersDB.UsersList[username.Trim()] == pin.Trim())
+                Console.WriteLine("What is your username?\n" +
+                    "(q) = Quit");
+                string username = Console.ReadLine();
+
+                Console.WriteLine("What is your pin?\n" +
+                    "(q) = Quit");
+                string pin = Console.ReadLine();
+
+                if (AllUsersDB.UsersList.ContainsKey(username.Trim()))
                 {
-                    Console.WriteLine($"Logging in as {username}...");
-                    // Add a 'choose account' screen first!
-                    HandleBankAccounts(username, pin);
-                    //RunBank(username, pin);
+                    if (AllUsersDB.UsersList[username.Trim()] == pin.Trim())
+                    {
+                        Console.WriteLine($"Logging in as {username}...");
+                        // Add a 'choose account' screen first!
+                        HandleBankAccounts(username, pin);
+                        userLoginMenu = false;
+                        //RunBank(username, pin);
+                    }
+                    else if (pin == "q")
+                    {
+                        Console.WriteLine("exiting...");
+                        userLoginMenu = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid username/password combination");
+                    }
+                } else if(username == "q")
+                {
+                    Console.WriteLine("exiting...");
+                    userLoginMenu = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid username/password combination");
                 }
             }
+
         }
 
         static void HandleBankAccounts(string name, string pin)

@@ -20,17 +20,21 @@ namespace AtmMachine
 
         public void GetUsers()
         {
-            using (var reader = new StreamReader(FilePath))
+            if(File.Exists(FilePath))
             {
-                while (reader.Peek() > -1)
+                using (var reader = new StreamReader(FilePath))
                 {
-                    var line = reader.ReadLine().Split(',');
-                    if(!UsersList.ContainsKey(line[0]))
+                    while (reader.Peek() > -1)
                     {
-                        UsersList.Add(line[0].Trim(), line[1].Trim());
+                        var line = reader.ReadLine().Split(',');
+                        if (!UsersList.ContainsKey(line[0]))
+                        {
+                            UsersList.Add(line[0].Trim(), line[1].Trim());
+                        }
                     }
                 }
             }
+
         }
 
         public void AddUser(string username, string pin)
