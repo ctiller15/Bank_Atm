@@ -128,7 +128,7 @@ namespace AtmMachine
             Name = name;
             PersonalIdentificationNumber = PIN;
             //Accounts.Add(new Account());
-            UserData = new UserData(name, this);
+            UserData = new UserData(name);
             Console.WriteLine(Accounts);
         }
     }

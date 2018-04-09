@@ -32,21 +32,23 @@ namespace AtmMachine
 
         }
 
-        public void UpdateBankAccounts(string name, double savings, double checking)
+        //public void UpdateBankAccounts(string name, double savings, double checking)
+        public void UpdateBankAccounts(Account acc)
         {
-            double[] accounts = new double[] { savings, checking };
+            double[] accounts = new double[] { acc.GetSavingsBalance(), acc.GetCheckingBalance() };
             foreach (var data in BankData)
             {
-                Console.WriteLine($"{data.Key}, {name} , {data.Value[0]} , {data.Value[1]}");
+                Console.WriteLine($"{data.Key}, {acc.Name} , {data.Value[0]} , {data.Value[1]}");
             }
-            Console.WriteLine(BankData.ContainsKey(name.Trim()));
-            Console.WriteLine($"{name.GetType()}, {name}");
-            if(!BankData.ContainsKey(name.Trim()))
+            Console.WriteLine(BankData.ContainsKey(acc.Name.Trim()));
+            Console.WriteLine($"{acc.Name.GetType()}, {acc.Name}");
+            // Ha! Redundant.
+            if(!BankData.ContainsKey(acc.Name.Trim()))
             {
-                BankData[name.Trim()] = accounts;
+                BankData[acc.Name.Trim()] = accounts;
             } else
             {
-                BankData[name.Trim()] = accounts;
+                BankData[acc.Name.Trim()] = accounts;
             }
 
             Console.WriteLine($"{accounts[0]}, {accounts[1]}");
@@ -57,7 +59,7 @@ namespace AtmMachine
             }
             Console.ReadLine();
 
-            using (var writer = new StreamWriter(FilePath + "bank_money.csv"))
+            using (var writer = new StreamWriter($"{FilePath}{acc.Name}/bank_money.csv"))
             {
                 foreach (var data in BankData)
                 {
@@ -98,7 +100,7 @@ namespace AtmMachine
         //    }
         //}
 
-        public UserData(string name, User user)
+        public UserData(string name)
         {
             FilePath = $"../../../userData/Users/{name}/";
             Directory.CreateDirectory("../../../userData/Users");

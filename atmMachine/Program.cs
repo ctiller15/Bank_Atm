@@ -122,8 +122,12 @@ namespace AtmMachine
                 useracc.AdjustChecking(amount, action);
             }
 
+            UserData userdata = new UserData(useracc.Owner);
+            userdata.UpdateBankAccounts(useracc);
+            userdata.LogTransactions(action, amount, accType);
+
             // Comment out and fix later.
-            //user.UserData.UpdateBankAccounts(user.Name, user.Accounts[0].GetSavingsBalance(), user.Accounts[0].GetCheckingBalance());
+            //user.UserData.UpdateBankAccounts(useracc.Owner, GetSavingsBalance(), GetCheckingBalance());
             //user.UserData.LogTransactions(action, amount, accType);
             Console.WriteLine("We're logging!");
             Console.ReadLine();
