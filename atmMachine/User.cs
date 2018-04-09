@@ -74,6 +74,56 @@ namespace AtmMachine
 
 
         }
+
+        public void CloseAccount()
+        {
+            GetAccounts();
+            bool noChoice = true;
+            while(noChoice)
+            {
+                if (Accounts.Count() > 0)
+                {
+                    Console.WriteLine("Which account would you like to close?\n");
+                    for (int i = 0; i < Accounts.Count(); i++)
+                    {
+                        Console.WriteLine($"({i + 1}) {Accounts[i].Name}");
+                    }
+                    Console.WriteLine("(q) Quit");
+
+                    // Pick the proper file.
+                    string option = Console.ReadLine();
+
+                    if(int.TryParse(option, out int n))
+                    {
+                        if (Convert.ToInt32(option) - 1 <= Accounts.Count())
+                        {
+                            // Then remove account folder. Completely.
+                            Directory.Delete($"../../../userData/Users/{Name}/{Accounts[Convert.ToInt32(option) - 1].Name}/", true);
+                            // Remove from list.
+                            Accounts.RemoveAt(Convert.ToInt32(option) - 1);
+                            Console.WriteLine("Account closed");
+                        } else
+                        {
+                            Console.WriteLine("Invalid option");
+                        }
+                    } else if(option == "q")
+                    {
+                        noChoice = false;
+                    } else
+                    {
+                        Console.WriteLine("Invalid option");
+                    }
+
+
+                }
+                else
+                {
+                    Console.WriteLine("You don't have any accounts.");
+                    noChoice = false;
+                }
+            }
+
+        }
         
         public User(string name, string PIN)
         {

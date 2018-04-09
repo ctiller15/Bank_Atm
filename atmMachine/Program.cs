@@ -350,6 +350,7 @@ namespace AtmMachine
                 else if(choice == "3")
                 {
                     Console.WriteLine("Closing account...");
+                    user.CloseAccount();
                 }
                 else if(choice == "q")
                 {
