@@ -10,397 +10,393 @@ namespace AtmMachine
     {
         // TODO: Create a UI class to handle all visual aspects of the app.
         public static UsersDB AllUsersDB = new UsersDB();
+        public static UserInterface UI = new UserInterface();
 
-        static void IntroduceUser(User user)
-        {
-            Console.Clear();
-            Console.WriteLine($"Hello {user.Name}! Welcome to your bank account.\n");
-            user.Accounts[0].ShowUserAcc();
-            Console.ReadLine();
-        }
+        //static void IntroduceUser(User user)
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine($"Hello {user.Name}! Welcome to your bank account.\n");
+        //    user.Accounts[0].ShowUserAcc();
+        //    Console.ReadLine();
+        //}
 
-        static string MenuUserPrompt(Account acc)
-        {
-            Console.Clear();
-            acc.ShowUserAcc();
-            Console.WriteLine("What transaction would you like to do next?\n\n" +
-                "(1) Deposit to savings\n" +
-                "(2) Deposit to checking\n" +
-                "(3) Withdraw from savings\n" +
-                "(4) Withdraw from checking\n" +
-                "(5) Transfer from checking to savings\n" +
-                "(6) Transfer from savings to checking\n" +
-                "(q) Log out");
+        //static string MenuUserPrompt(Account acc)
+        //{
+        //    Console.Clear();
+        //    acc.ShowUserAcc();
+        //    Console.WriteLine("What transaction would you like to do next?\n\n" +
+        //        "(1) Deposit to savings\n" +
+        //        "(2) Deposit to checking\n" +
+        //        "(3) Withdraw from savings\n" +
+        //        "(4) Withdraw from checking\n" +
+        //        "(5) Transfer from checking to savings\n" +
+        //        "(6) Transfer from savings to checking\n" +
+        //        "(q) Log out");
 
-            return(Console.ReadLine());
-        }
+        //    return(Console.ReadLine());
+        //}
 
-        static void ModifyBankAcc(Account useracc, string action, string accType)
-        {
-            double amount = 0;
-            Console.WriteLine($"{accType}\n" +
-                $"How much would you like to {action}? ($)");
+        //static void ModifyBankAcc(Account useracc, string action, string accType)
+        //{
+        //    double amount = 0;
+        //    Console.WriteLine($"{accType}\n" +
+        //        $"How much would you like to {action}? ($)");
 
-            TrySubmittedVal(useracc, amount, accType, action, UpdateAccType);
-        }
+        //    TrySubmittedVal(useracc, amount, accType, action, UpdateAccType);
+        //}
 
-        static void TrySubmittedVal(Account acc, double amt, string type, string action, Action<Account, double, string, string> Run)
-        {
-            try
-            {
-                amt = Convert.ToDouble(Console.ReadLine());
-            }
-            catch (FormatException err)
-            {
-                Console.WriteLine($"Exception caught: {err}");
-                Console.WriteLine("That wasn't a valid dollar amount");
-            }
-            finally
-            {
-                Run(acc, amt, type, action);
-            }
-        }
+        //static void TrySubmittedVal(Account acc, double amt, string type, string action, Action<Account, double, string, string> Run)
+        //{
+        //    try
+        //    {
+        //        amt = Convert.ToDouble(Console.ReadLine());
+        //    }
+        //    catch (FormatException err)
+        //    {
+        //        Console.WriteLine($"Exception caught: {err}");
+        //        Console.WriteLine("That wasn't a valid dollar amount");
+        //    }
+        //    finally
+        //    {
+        //        Run(acc, amt, type, action);
+        //    }
+        //}
 
-        // In each case, withdraw from the first account, and deposit into the other!
-        static void TransferFunds(double acc1Funds, double acc2Funds, int option, Account useracc)
-        {
-            double amount = 0;
-            string accType1 = "";
-            string accType2 = "";
+        //// In each case, withdraw from the first account, and deposit into the other!
+        //static void TransferFunds(double acc1Funds, double acc2Funds, int option, Account useracc)
+        //{
+        //    double amount = 0;
+        //    string accType1 = "";
+        //    string accType2 = "";
 
-            if (option == 1)
-            {
-                accType1 = "checking";
-                accType2 = "savings";
-            }
-            else if (option == 2)
-            {
-                accType1 = "savings";
-                accType2 = "checking";
-            }
-            Console.WriteLine($"How much would you like to transfer?");
+        //    if (option == 1)
+        //    {
+        //        accType1 = "checking";
+        //        accType2 = "savings";
+        //    }
+        //    else if (option == 2)
+        //    {
+        //        accType1 = "savings";
+        //        accType2 = "checking";
+        //    }
+        //    Console.WriteLine($"How much would you like to transfer?");
 
-            try
-            {
-                // Check if it is a valid number.
-                amount = Convert.ToDouble(Console.ReadLine());
-            }
-            catch (FormatException err)
-            {
-                Console.WriteLine($"Exception caught: {err}");
-                Console.WriteLine("That wasn't a valid dollar amount!");
-            }
-            finally
-            {
-                Console.WriteLine(amount);
-                if(amount > acc1Funds)
-                {
-                    Console.WriteLine("That won't work! Aborting transfer");
-                } else
-                {
-                    RunTransfer(useracc, amount, accType1, accType2);
-                }
-            }
-        }
+        //    try
+        //    {
+        //        // Check if it is a valid number.
+        //        amount = Convert.ToDouble(Console.ReadLine());
+        //    }
+        //    catch (FormatException err)
+        //    {
+        //        Console.WriteLine($"Exception caught: {err}");
+        //        Console.WriteLine("That wasn't a valid dollar amount!");
+        //    }
+        //    finally
+        //    {
+        //        Console.WriteLine(amount);
+        //        if(amount > acc1Funds)
+        //        {
+        //            Console.WriteLine("That won't work! Aborting transfer");
+        //        } else
+        //        {
+        //            RunTransfer(useracc, amount, accType1, accType2);
+        //        }
+        //    }
+        //}
 
-        static void RunTransfer(Account useracc, double amt, string accType1, string accType2)
-        {
+        //static void RunTransfer(Account useracc, double amt, string accType1, string accType2)
+        //{
 
-            // Withdraw from the first account.
-            UpdateAccType(useracc, amt, accType1, "withdraw");
-            // Deposit into the second account.
-            UpdateAccType(useracc, amt, accType2, "deposit");
-        }
+        //    // Withdraw from the first account.
+        //    UpdateAccType(useracc, amt, accType1, "withdraw");
+        //    // Deposit into the second account.
+        //    UpdateAccType(useracc, amt, accType2, "deposit");
+        //}
 
-        static void UpdateAccType(Account useracc, double amount, string accType, string action)
-        {
-            if (accType == "savings")
-            {
-                useracc.AdjustSavings(amount, action);
-            }
-            else if (accType == "checking")
-            {
-                useracc.AdjustChecking(amount, action);
-            }
+        //static void UpdateAccType(Account useracc, double amount, string accType, string action)
+        //{
+        //    if (accType == "savings")
+        //    {
+        //        useracc.AdjustSavings(amount, action);
+        //    }
+        //    else if (accType == "checking")
+        //    {
+        //        useracc.AdjustChecking(amount, action);
+        //    }
 
-            UserData userdata = new UserData(useracc.Owner);
-            userdata.UpdateBankAccounts(useracc);
-            userdata.LogTransactions(action, amount, useracc);
+        //    UserData userdata = new UserData(useracc.Owner);
+        //    userdata.UpdateBankAccounts(useracc);
+        //    userdata.LogTransactions(action, amount, useracc);
 
-            Console.WriteLine("We're logging!");
-            Console.ReadLine();
-        }
+        //    Console.WriteLine("We're logging!");
+        //    Console.ReadLine();
+        //}
 
-        static bool HandleUserOption(string option, Account useracc)
-        {
-            if (option == "1")
-            {
-                ModifyBankAcc(useracc, "deposit", "savings");
-            }
-            else if (option == "2")
-            {
-                ModifyBankAcc(useracc, "deposit", "checking");
-            }
-            else if (option == "3")
-            {
-                ModifyBankAcc(useracc, "withdraw", "savings");
-            }
-            else if (option == "4")
-            {
-                ModifyBankAcc(useracc, "withdraw", "checking");
-            } else if(option == "5")
-            {
-                TransferFunds(useracc.GetCheckingBalance(), useracc.GetSavingsBalance(), 1, useracc);
-            } else if(option == "6")
-            {
-                TransferFunds(useracc.GetSavingsBalance(), useracc.GetCheckingBalance(), 2, useracc);
-            } else if(option == "q")
-            {
-                Console.Clear();
-                Console.WriteLine($"Logging out of {useracc.Name}...");
-                return false;
-            } else
-            {
-                Console.WriteLine("Invalid option");
-            }
-            return true;
-        }
+        //static bool HandleUserOption(string option, Account useracc)
+        //{
+        //    if (option == "1")
+        //    {
+        //        ModifyBankAcc(useracc, "deposit", "savings");
+        //    }
+        //    else if (option == "2")
+        //    {
+        //        ModifyBankAcc(useracc, "deposit", "checking");
+        //    }
+        //    else if (option == "3")
+        //    {
+        //        ModifyBankAcc(useracc, "withdraw", "savings");
+        //    }
+        //    else if (option == "4")
+        //    {
+        //        ModifyBankAcc(useracc, "withdraw", "checking");
+        //    } else if(option == "5")
+        //    {
+        //        TransferFunds(useracc.GetCheckingBalance(), useracc.GetSavingsBalance(), 1, useracc);
+        //    } else if(option == "6")
+        //    {
+        //        TransferFunds(useracc.GetSavingsBalance(), useracc.GetCheckingBalance(), 2, useracc);
+        //    } else if(option == "q")
+        //    {
+        //        Console.Clear();
+        //        Console.WriteLine($"Logging out of {useracc.Name}...");
+        //        return false;
+        //    } else
+        //    {
+        //        Console.WriteLine("Invalid option");
+        //    }
+        //    return true;
+        //}
 
         static void CreateUser(string name, string PIN)
         {
             var user = new User(name, PIN);
         }
 
-        static void RunBank(Account acc)
-        {
-            string userOption;
-            bool isAccountLoggedIn = true;
+        //static void RunBank(Account acc)
+        //{
+        //    string userOption;
+        //    bool isAccountLoggedIn = true;
 
-            while (isAccountLoggedIn)
-            {
-                //Ask what they want to do next...
-                userOption = MenuUserPrompt(acc);
-                isAccountLoggedIn = HandleUserOption(userOption, acc);
-            }
-        }
+        //    while (isAccountLoggedIn)
+        //    {
+        //        //Ask what they want to do next...
+        //        userOption = UI.MenuUserPrompt(acc);
+        //        isAccountLoggedIn = HandleUserOption(userOption, acc);
+        //    }
+        //}
 
-        static void CreateUserAccount()
-        {
-            bool isComplete = false;
-            Console.Clear();
-            Console.WriteLine("Creating account:");
+        //static void CreateUserAccount()
+        //{
+        //    bool isComplete = false;
+        //    Console.Clear();
+        //    Console.WriteLine("Creating account:");
 
-            while(!isComplete)
-            {
-                Console.WriteLine("What is your username? \n" +
-                    "(q = quit)");
-                string username = Console.ReadLine();
+        //    while(!isComplete)
+        //    {
+        //        Console.WriteLine("What is your username? \n" +
+        //            "(q = quit)");
+        //        string username = Console.ReadLine();
 
-                if (AllUsersDB.UsersList.ContainsKey(username.Trim()) && username.Count() > 1)
-                {
-                    Console.WriteLine("username already taken. Sorry! Try again.");
-                }
-                else if (username == "q")
-                {
-                    Console.WriteLine("Returning to main menu...");
-                    isComplete = true;
-                }
-                else
-                {
-                    Console.WriteLine("What is your pin?\n" +
-                        "(q = quit)");
-                    string pin = Console.ReadLine();
+        //        if (AllUsersDB.UsersList.ContainsKey(username.Trim()) && username.Count() > 1)
+        //        {
+        //            Console.WriteLine("username already taken. Sorry! Try again.");
+        //        }
+        //        else if (username == "q")
+        //        {
+        //            Console.WriteLine("Returning to main menu...");
+        //            isComplete = true;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("What is your pin?\n" +
+        //                "(q = quit)");
+        //            string pin = Console.ReadLine();
 
-                    if(pin == "q")
-                    {
-                        isComplete = true;
-                    } else if(pin.Count() >= 4)
-                    {
-                        AllUsersDB.AddUser(username, pin);
-                        Console.WriteLine($"Welcome to the bank of 'Give us your money'. Your username is {username} and your pin is {pin}");
-                        isComplete = true;
-                    } else
-                    {
-                        Console.WriteLine("Invalid PIN. A valid PIN must be at least four numbers long");
-                    }
+        //            if(pin == "q")
+        //            {
+        //                isComplete = true;
+        //            } else if(pin.Count() >= 4)
+        //            {
+        //                AllUsersDB.AddUser(username, pin);
+        //                Console.WriteLine($"Welcome to the bank of 'Give us your money'. Your username is {username} and your pin is {pin}");
+        //                isComplete = true;
+        //            } else
+        //            {
+        //                Console.WriteLine("Invalid PIN. A valid PIN must be at least four numbers long");
+        //            }
 
-                }
-            }
+        //        }
+        //    }
 
-        }
+        //}
 
-        static void LogUserIn()
-        {
-            bool userLoginMenu = true;
+        //static void LogUserIn()
+        //{
+        //    bool userLoginMenu = true;
 
-            while (userLoginMenu)
-            {
-                Console.WriteLine("What is your username?\n" +
-                    "(q) = Quit");
-                string username = Console.ReadLine();
+        //    while (userLoginMenu)
+        //    {
+        //        Console.WriteLine("What is your username?\n" +
+        //            "(q) = Quit");
+        //        string username = Console.ReadLine();
 
-                Console.WriteLine("What is your pin?\n" +
-                    "(q) = Quit");
-                string pin = Console.ReadLine();
+        //        Console.WriteLine("What is your pin?\n" +
+        //            "(q) = Quit");
+        //        string pin = Console.ReadLine();
 
-                if (AllUsersDB.UsersList.ContainsKey(username.Trim()))
-                {
-                    if (AllUsersDB.UsersList[username.Trim()] == pin.Trim())
-                    {
-                        Console.WriteLine($"Logging in as {username}...");
-                        // Add a 'choose account' screen first!
-                        HandleBankAccounts(username, pin);
-                        userLoginMenu = false;
-                        //RunBank(username, pin);
-                    }
-                    else if (pin == "q")
-                    {
-                        Console.WriteLine("exiting...");
-                        userLoginMenu = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid username/password combination");
-                    }
-                } else if(username == "q")
-                {
-                    Console.WriteLine("exiting...");
-                    userLoginMenu = false;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid username/password combination");
-                }
-            }
+        //        if (AllUsersDB.UsersList.ContainsKey(username.Trim()))
+        //        {
+        //            if (AllUsersDB.UsersList[username.Trim()] == pin.Trim())
+        //            {
+        //                Console.WriteLine($"Logging in as {username}...");
+        //                // Add a 'choose account' screen first!
+        //                HandleBankAccounts(username, pin);
+        //                userLoginMenu = false;
+        //                //RunBank(username, pin);
+        //            }
+        //            else if (pin == "q")
+        //            {
+        //                Console.WriteLine("exiting...");
+        //                userLoginMenu = false;
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("Invalid username/password combination");
+        //            }
+        //        } else if(username == "q")
+        //        {
+        //            Console.WriteLine("exiting...");
+        //            userLoginMenu = false;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Invalid username/password combination");
+        //        }
+        //    }
 
-        }
+        //}
 
-        static void HandleBankAccounts(string name, string pin)
-        {
-            var user = new User(name, pin);
-            bool handled = false;
+        //static void HandleBankAccounts(string name, string pin)
+        //{
+        //    var user = new User(name, pin);
+        //    bool handled = false;
 
-            while(!handled)
-            {
-                Console.WriteLine("What would you like to do?\n" +
-                    "(1) Create a new bank account. \n" +
-                    "(2) Manage an account\n" +
-                    "(3) Close an account\n" +
-                    "(q) Exit to previous menu");
+        //    while(!handled)
+        //    {
+        //        Console.WriteLine("What would you like to do?\n" +
+        //            "(1) Create a new bank account. \n" +
+        //            "(2) Manage an account\n" +
+        //            "(3) Close an account\n" +
+        //            "(q) Exit to previous menu");
 
-                string choice = Console.ReadLine();
+        //        string choice = Console.ReadLine();
                 
-                if(choice == "1")
-                {
-                    Console.WriteLine("Creating new account...");
-                    user.CreateAccount();
-                } else if(choice == "2")
-                {
-                    Console.WriteLine("Managing account...");
-                    // Show all accounts.
-                    user.GetAccounts();
+        //        if(choice == "1")
+        //        {
+        //            Console.WriteLine("Creating new account...");
+        //            user.CreateAccount();
+        //        } else if(choice == "2")
+        //        {
+        //            Console.WriteLine("Managing account...");
+        //            // Show all accounts.
+        //            user.GetAccounts();
 
 
-                    // Variables for when the user chooses the account and for the account to be referenced in the future.
-                    bool chosen = false;
+        //            // Variables for when the user chooses the account and for the account to be referenced in the future.
+        //            bool chosen = false;
 
-                    while(!chosen)
-                    {
-                        // Allow user to pick which account they want to work with.
-                        bool hasAccount = user.ShowAccounts();
+        //            while(!chosen)
+        //            {
+        //                // Allow user to pick which account they want to work with.
+        //                bool hasAccount = user.ShowAccounts();
 
-                        if(hasAccount)
-                        {
-                            string accChoice = Console.ReadLine();
-                            int accRef;
-                            bool isNumeric = int.TryParse(accChoice, out int n);
-                            if (isNumeric)
-                            {
-                                if (Convert.ToInt32(accChoice) > user.Accounts.Count())
-                                {
-                                    Console.WriteLine("not a valid option");
-                                }
-                                else
-                                {
-                                    accRef = Convert.ToInt32(accChoice) - 1;
-                                    Console.WriteLine("Opening account...");
-                                    chosen = true;
-                                    RunBank(user.Accounts[accRef]);
-                                }
-                            }
-                            else if (accChoice == "q")
-                            {
-                                Console.WriteLine("Exiting selection...");
-                                chosen = true;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid option");
-                            }
-                        } else
-                        {
-                            chosen = true;
-                        }
-
-
-                        // THEN run bank with that account.
-                    }
-
-                }
-                else if(choice == "3")
-                {
-                    Console.WriteLine("Closing account...");
-                    user.CloseAccount();
-                }
-                else if(choice == "q")
-                {
-                    Console.WriteLine("Exiting to previous menu...");
-                    handled = true;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Choice.");
-                }
-            }
-            
-
-            // List out all accounts here.
+        //                if(hasAccount)
+        //                {
+        //                    string accChoice = Console.ReadLine();
+        //                    int accRef;
+        //                    bool isNumeric = int.TryParse(accChoice, out int n);
+        //                    if (isNumeric)
+        //                    {
+        //                        if (Convert.ToInt32(accChoice) > user.Accounts.Count())
+        //                        {
+        //                            Console.WriteLine("not a valid option");
+        //                        }
+        //                        else
+        //                        {
+        //                            accRef = Convert.ToInt32(accChoice) - 1;
+        //                            Console.WriteLine("Opening account...");
+        //                            chosen = true;
+        //                            RunBank(user.Accounts[accRef]);
+        //                        }
+        //                    }
+        //                    else if (accChoice == "q")
+        //                    {
+        //                        Console.WriteLine("Exiting selection...");
+        //                        chosen = true;
+        //                    }
+        //                    else
+        //                    {
+        //                        Console.WriteLine("Invalid option");
+        //                    }
+        //                } else
+        //                {
+        //                    chosen = true;
+        //                }
 
 
-        }
+        //                // THEN run bank with that account.
+        //            }
 
-        static void LoggedInMenu()
-        {
-            bool menuActive = true;
+        //        }
+        //        else if(choice == "3")
+        //        {
+        //            Console.WriteLine("Closing account...");
+        //            user.CloseAccount();
+        //        }
+        //        else if(choice == "q")
+        //        {
+        //            Console.WriteLine("Exiting to previous menu...");
+        //            handled = true;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Invalid Choice.");
+        //        }
+        //    }
+        //}
 
-            while (menuActive)
-            {
-                Console.WriteLine("What would you like to do?\n" +
-                "(1) Create Account\n" +
-                "(2) Log In\n" +
-                "(q) Exit program\n");
+        //static void LoggedInMenu()
+        //{
+        //    bool menuActive = true;
 
-                string userOption = Console.ReadLine();
+        //    while (menuActive)
+        //    {
+        //        Console.WriteLine("What would you like to do?\n" +
+        //        "(1) Create Account\n" +
+        //        "(2) Log In\n" +
+        //        "(q) Exit program\n");
 
-                if (userOption == "1")
-                {
-                    CreateUserAccount();
-                }
-                else if (userOption == "2")
-                {
-                    LogUserIn();
-                }
-                else if (userOption == "q")
-                {
-                    Console.WriteLine("Ending program. Hope you enjoyed!");
-                    menuActive = false;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid option. Please try again.");
-                }
-            }
-        }
+        //        string userOption = Console.ReadLine();
+
+        //        if (userOption == "1")
+        //        {
+        //            CreateUserAccount();
+        //        }
+        //        else if (userOption == "2")
+        //        {
+        //            LogUserIn();
+        //        }
+        //        else if (userOption == "q")
+        //        {
+        //            Console.WriteLine("Ending program. Hope you enjoyed!");
+        //            menuActive = false;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Invalid option. Please try again.");
+        //        }
+        //    }
+        //}
 
         static void Main(string[] args)
         {
@@ -408,7 +404,7 @@ namespace AtmMachine
  
             AllUsersDB.GetUsers();
 
-            LoggedInMenu();
+            UI.LoggedInMenu();
         }
     }
 }

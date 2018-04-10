@@ -13,6 +13,7 @@ namespace AtmMachine
 
         private Dictionary<string, double[]> BankData = new Dictionary<string, double[]>();
 
+        // Updates the user bank account data in the db.
         public void UpdateBankAccounts(Account acc)
         {
             double[] accounts = new double[] { acc.GetSavingsBalance(), acc.GetCheckingBalance() };

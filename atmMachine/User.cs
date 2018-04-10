@@ -23,7 +23,7 @@ namespace AtmMachine
 
             string AccName = Console.ReadLine();
             Account newAcc = new Account(AccName, Name);
-            Console.WriteLine(newAcc);
+            //Console.WriteLine(newAcc);
             Accounts.Add(newAcc);
             // Now save the account.
             UserData.SaveAccount(newAcc);
@@ -34,16 +34,12 @@ namespace AtmMachine
         {
             Console.WriteLine($"Getting all {Name} bank accounts...");
             var directories = Directory.GetDirectories($"../../../userData/Users/{Name}");
-            //Console.WriteLine(directories);
-
 
             foreach(var dir in directories)
             {
                 // Apparently this is the best way to just get the names of the directories. I tried Path.GetDirectoryName and that instead returned the entire path.
-                //Console.WriteLine(Path.GetFileName(dir));
                 var nameCheck = Accounts.Where(p => p.Name.Trim() == Path.GetFileName(dir).Trim());
-                //Console.WriteLine(nameCheck);
-                //Console.WriteLine(nameCheck.Count());
+
                 if (nameCheck.Count() == 0)
                 {
                     Account savedAcc = new Account(Path.GetFileName(dir), Name);
@@ -71,8 +67,6 @@ namespace AtmMachine
                 Console.WriteLine("You don't have any accounts yet! Please create one.\n\n");
                 return false;
             }
-
-
         }
 
         public void CloseAccount()
@@ -113,8 +107,6 @@ namespace AtmMachine
                     {
                         Console.WriteLine("Invalid option");
                     }
-
-
                 }
                 else
                 {
@@ -131,7 +123,6 @@ namespace AtmMachine
             Name = name;
             PersonalIdentificationNumber = PIN;
             UserData = new UserData(name);
-
         }
     }
 }
